@@ -4811,6 +4811,12 @@ public class BytecodeTextTestGenerated extends AbstractBytecodeTextTest {
         }
 
         @Test
+        @TestMetadata("dontGenerateOnNullableString.kt")
+        public void testDontGenerateOnNullableString() throws Exception {
+            runTest("compiler/testData/codegen/bytecodeText/parameterlessMain/dontGenerateOnNullableString.kt");
+        }
+
+        @Test
         @TestMetadata("dontGenerateOnVarargsString.kt")
         public void testDontGenerateOnVarargsString() throws Exception {
             runTest("compiler/testData/codegen/bytecodeText/parameterlessMain/dontGenerateOnVarargsString.kt");
