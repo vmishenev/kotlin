@@ -337,6 +337,7 @@ class Fir2IrConverter(
             scopeSession: ScopeSession,
             firFiles: List<FirFile>,
             languageVersionSettings: LanguageVersionSettings,
+            descriptorMangler: KotlinMangler.DescriptorMangler,
             signaturer: IdSignatureComposer,
             generatorExtensions: GeneratorExtensions,
             mangler: FirMangler,
@@ -385,7 +386,10 @@ class Fir2IrConverter(
                 converter.registerFileAndClasses(firFile, irModuleFragment)
             }
             val irProviders =
-                generateTypicalIrProviderList(irModuleFragment.descriptor, irBuiltIns, symbolTable, extensions = generatorExtensions)
+                generateTypicalIrProviderList(
+                    irModuleFragment.descriptor, irBuiltIns, symbolTable, descriptorMangler,
+                    extensions = generatorExtensions
+                )
             val externalDependenciesGenerator = ExternalDependenciesGenerator(
                 symbolTable,
                 irProviders
