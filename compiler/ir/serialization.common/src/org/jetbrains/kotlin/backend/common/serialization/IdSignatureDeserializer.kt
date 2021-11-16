@@ -17,9 +17,10 @@ import org.jetbrains.kotlin.backend.common.serialization.proto.IdSignature as Pr
 import org.jetbrains.kotlin.backend.common.serialization.proto.LocalSignature as ProtoLocalSignature
 import org.jetbrains.kotlin.backend.common.serialization.proto.LoweredIdSignature as ProtoLoweredIdSignature
 
-class IdSignatureDeserializer(private val libraryFile: IrLibraryFile, fileSymbol: IrFileSymbol?) {
-
-    private val fileSignature: FileSignature? = fileSymbol?.let { FileSignature(it) }
+class IdSignatureDeserializer(
+    private val libraryFile: IrLibraryFile,
+    private val fileSignature: FileSignature?
+) {
 
     private fun loadSignatureProto(index: Int): ProtoIdSignature {
         return libraryFile.signature(index)
