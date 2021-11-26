@@ -402,7 +402,7 @@ open class IrBasedSimpleFunctionDescriptor(owner: IrSimpleFunction) : SimpleFunc
     override fun isTailrec() = owner.isTailrec
     override fun isInline() = owner.isInline
 
-    override fun isExpect() = false
+    override fun isExpect() = owner.isExpect
     override fun isActual() = false
     override fun isInfix() = false
     override fun isOperator() = false
@@ -525,7 +525,7 @@ open class IrBasedClassConstructorDescriptor(owner: IrConstructor) : ClassConstr
 
     override fun isPrimary() = owner.isPrimary
 
-    override fun isExpect() = false
+    override fun isExpect() = owner.isExpect
 
     override fun isTailrec() = false
 
@@ -620,7 +620,7 @@ open class IrBasedClassDescriptor(owner: IrClass) : ClassDescriptor, IrBasedDecl
 
     override fun getOriginal() = this
 
-    override fun isExpect() = false
+    override fun isExpect() = owner.isExpect
 
     override fun substitute(substitutor: TypeSubstitutor): ClassifierDescriptorWithTypeParameters =
         throw UnsupportedOperationException("IrBased descriptors SHOULD NOT be substituted")
@@ -834,7 +834,7 @@ open class IrBasedPropertyDescriptor(owner: IrProperty) :
 
     override fun getOriginal() = this
 
-    override fun isExpect() = false
+    override fun isExpect() = owner.isExpect
 
     override fun substitute(substitutor: TypeSubstitutor): PropertyDescriptor =
         throw UnsupportedOperationException("IrBased descriptors SHOULD NOT be substituted")
