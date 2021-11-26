@@ -56,7 +56,8 @@ internal fun Context.psiToIr(
 
     val stubGenerator = DeclarationStubGeneratorImpl(
             moduleDescriptor, symbolTable,
-            generatorContext.irBuiltIns
+            generatorContext.irBuiltIns,
+            KonanManglerDesc
     )
     val irBuiltInsOverDescriptors = generatorContext.irBuiltIns as IrBuiltInsOverDescriptors
     val functionIrClassFactory: KonanIrAbstractDescriptorBasedFunctionFactory =
