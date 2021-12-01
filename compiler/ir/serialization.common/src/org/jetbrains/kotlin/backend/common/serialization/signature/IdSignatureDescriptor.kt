@@ -25,7 +25,6 @@ open class IdSignatureDescriptor(private val mangler: KotlinMangler.DescriptorMa
 
         override fun accept(d: DeclarationDescriptor) {
             d.accept(this, null)
-//            assert(!isTopLevelPrivate) { "$d is Top level private" }
         }
 
         private fun createContainer() {
