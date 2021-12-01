@@ -8,6 +8,7 @@ package org.jetbrains.kotlin.fir.backend
 import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
 import org.jetbrains.kotlin.backend.common.extensions.IrPluginContext
 import org.jetbrains.kotlin.backend.common.ir.BuiltinSymbolsBase
+import org.jetbrains.kotlin.backend.common.serialization.DescriptorByIdSignatureFinderImpl
 import org.jetbrains.kotlin.config.AnalysisFlags
 import org.jetbrains.kotlin.config.LanguageVersionSettings
 import org.jetbrains.kotlin.descriptors.ModuleDescriptor
@@ -387,7 +388,8 @@ class Fir2IrConverter(
             }
             val irProviders =
                 generateTypicalIrProviderList(
-                    irModuleFragment.descriptor, irBuiltIns, symbolTable, descriptorMangler,
+                    irModuleFragment.descriptor, irBuiltIns, symbolTable,
+                    DescriptorByIdSignatureFinderImpl(irModuleFragment.descriptor, descriptorMangler),
                     extensions = generatorExtensions
                 )
             val externalDependenciesGenerator = ExternalDependenciesGenerator(

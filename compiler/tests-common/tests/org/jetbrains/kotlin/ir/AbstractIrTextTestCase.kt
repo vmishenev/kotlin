@@ -7,10 +7,10 @@ package org.jetbrains.kotlin.ir
 
 import com.intellij.openapi.util.text.StringUtil
 import junit.framework.TestCase
+import org.jetbrains.kotlin.backend.common.serialization.DescriptorByIdSignatureFinderImpl
 import org.jetbrains.kotlin.backend.common.serialization.signature.IdSignatureDescriptor
 import org.jetbrains.kotlin.cli.js.loadPluginsForTests
 import org.jetbrains.kotlin.config.CompilerConfiguration
-import org.jetbrains.kotlin.config.languageVersionSettings
 import org.jetbrains.kotlin.descriptors.ModuleDescriptor
 import org.jetbrains.kotlin.descriptors.findClassAcrossModuleDependencies
 import org.jetbrains.kotlin.ir.backend.js.lower.serialization.ir.JsManglerDesc
@@ -59,7 +59,7 @@ abstract class AbstractIrTextTestCase : AbstractIrGeneratorTestCase() {
             irModule.descriptor,
             SymbolTable(signaturer, IrFactoryImpl), // TODO
             irModule.irBuiltins,
-            mangler,
+            DescriptorByIdSignatureFinderImpl(irModule.descriptor, mangler)
         )
 
         val path = wholeFile.path

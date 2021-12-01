@@ -5,6 +5,7 @@
 
 package org.jetbrains.kotlin.scripting.repl.js
 
+import org.jetbrains.kotlin.backend.common.serialization.DescriptorByIdSignatureFinderImpl
 import org.jetbrains.kotlin.cli.common.CLIConfigurationKeys
 import org.jetbrains.kotlin.cli.common.environment.setIdeaIoUseFallback
 import org.jetbrains.kotlin.cli.common.messages.AnalyzerWithCompilerReport
@@ -76,7 +77,9 @@ class JsCoreScriptingCompiler(
 
         val mangler = JvmDescriptorMangler(null)
         val psi2irContext = psi2ir.createGeneratorContext(module, bindingContext, symbolTable, generatorExtensions)
-        val providers = generateTypicalIrProviderList(module, psi2irContext.irBuiltIns, psi2irContext.symbolTable, mangler)
+        val providers = generateTypicalIrProviderList(
+            module, psi2irContext.irBuiltIns, psi2irContext.symbolTable, DescriptorByIdSignatureFinderImpl(module, mangler)
+        )
         val irModuleFragment = psi2ir.generateModuleFragment(psi2irContext, files, providers, emptyList(), null) // TODO: deserializer
 
         val context = JsIrBackendContext(
@@ -95,7 +98,7 @@ class JsCoreScriptingCompiler(
                 irModuleFragment.descriptor,
                 psi2irContext.irBuiltIns,
                 psi2irContext.symbolTable,
-                mangler
+                DescriptorByIdSignatureFinderImpl(irModuleFragment.descriptor, mangler)
             )
         ).generateUnboundSymbolsAsDependencies()
 
