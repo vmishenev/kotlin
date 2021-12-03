@@ -9,3 +9,5 @@ class A {
     @PublishedApi
     internal fun `access$test`(p: Int) = p
 }
+
+// FIR_COMPARISON
