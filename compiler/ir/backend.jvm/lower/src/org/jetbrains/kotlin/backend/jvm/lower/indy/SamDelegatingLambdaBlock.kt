@@ -236,7 +236,8 @@ internal class SamDelegatingLambdaBuilder(private val jvmContext: JvmBackendCont
         return IrTypeSubstitutor(
             irClassSymbol.owner.typeParameters.map { it.symbol },
             irType.arguments,
-            jvmContext.irBuiltIns
+            jvmContext.irBuiltIns,
+            jvmContext.typeSystem
         )
     }
 }

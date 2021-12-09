@@ -56,7 +56,8 @@ class WrapInlineDeclarationsWithReifiedTypeParametersLowering(val context: Backe
                 val typeSubstitutor = IrTypeSubstitutor(
                     substitutionMap.map { it.first },
                     substitutionMap.map { it.second },
-                    context.irBuiltIns
+                    context.irBuiltIns,
+                    context.typeSystem
                 )
 
                 val function = irFactory.addFunction(container.parent as IrDeclarationContainer) {

@@ -260,7 +260,7 @@ interface IrTypeSystemContext : TypeSystemContext, TypeSystemCommonSuperTypesCon
 
         val newArguments = ArrayList<IrTypeArgument>(typeArguments.size)
 
-        val typeSubstitutor = IrCapturedTypeSubstitutor(typeParameters.map { it.symbol }, typeArguments, capturedTypes, irBuiltIns)
+        val typeSubstitutor = IrCapturedTypeSubstitutor(typeParameters.map { it.symbol }, typeArguments, capturedTypes, irBuiltIns, this)
 
         for (index in typeArguments.indices) {
             val oldArgument = typeArguments[index]
@@ -456,7 +456,8 @@ interface IrTypeSystemContext : TypeSystemContext, TypeSystemCommonSuperTypesCon
             IrTypeSubstitutor(
                 (this as IrType).getClass()!!.typeParameters.map { it.symbol },
                 (this as? IrSimpleType)?.arguments.orEmpty(),
-                irBuiltIns
+                irBuiltIns,
+                this@IrTypeSystemContext
             ).substitute(type as IrType)
         }
 
@@ -535,7 +536,7 @@ interface IrTypeSystemContext : TypeSystemContext, TypeSystemCommonSuperTypesCon
     override fun substitutionSupertypePolicy(type: SimpleTypeMarker): TypeCheckerState.SupertypesPolicy {
         require(type is IrSimpleType)
         val parameters = extractTypeParameters((type.classifier as IrClassSymbol).owner).map { it.symbol }
-        val typeSubstitutor = IrTypeSubstitutor(parameters, type.arguments, irBuiltIns)
+        val typeSubstitutor = IrTypeSubstitutor(parameters, type.arguments, irBuiltIns, this)
 
         return object : TypeCheckerState.SupertypesPolicy.DoCustomTransform() {
             override fun transformType(state: TypeCheckerState, type: KotlinTypeMarker): SimpleTypeMarker {
@@ -548,6 +549,8 @@ interface IrTypeSystemContext : TypeSystemContext, TypeSystemCommonSuperTypesCon
     override fun KotlinTypeMarker.isTypeVariableType(): Boolean {
         return false
     }
+
+    fun IrType.erasedUpperBound(): IrClass? = null
 }
 
 fun extractTypeParameters(parent: IrDeclarationParent): List<IrTypeParameter> {

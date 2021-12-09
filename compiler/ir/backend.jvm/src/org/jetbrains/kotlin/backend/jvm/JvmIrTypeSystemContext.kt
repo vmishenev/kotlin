@@ -7,8 +7,10 @@ package org.jetbrains.kotlin.backend.jvm
 
 import org.jetbrains.kotlin.backend.jvm.ir.IrJvmFlexibleType
 import org.jetbrains.kotlin.backend.jvm.ir.asJvmFlexibleType
+import org.jetbrains.kotlin.backend.jvm.ir.erasedUpperBound
 import org.jetbrains.kotlin.backend.jvm.ir.isWithFlexibleNullability
 import org.jetbrains.kotlin.ir.IrBuiltIns
+import org.jetbrains.kotlin.ir.declarations.IrClass
 import org.jetbrains.kotlin.ir.types.IrSimpleType
 import org.jetbrains.kotlin.ir.types.IrType
 import org.jetbrains.kotlin.ir.types.IrTypeSystemContext
@@ -36,4 +38,6 @@ class JvmIrTypeSystemContext(override val irBuiltIns: IrBuiltIns) : IrTypeSystem
 
     override fun KotlinTypeMarker.isMarkedNullable(): Boolean =
         this is IrSimpleType && !isWithFlexibleNullability() && hasQuestionMark
+
+    override fun IrType.erasedUpperBound(): IrClass = erasedUpperBound
 }

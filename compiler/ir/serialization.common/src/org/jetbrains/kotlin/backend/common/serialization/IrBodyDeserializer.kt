@@ -271,7 +271,7 @@ class IrBodyDeserializer(
                     typeParameterSymbols.add(typeParameter.symbol)
                 }
 
-                val substitutor = IrTypeSubstitutor(typeParameterSymbols, typeArguments, builtIns)
+                val substitutor = IrTypeSubstitutor(typeParameterSymbols, typeArguments, builtIns, null)
                 return substitutor.substitute(rawType) as IrSimpleType
             }
         }

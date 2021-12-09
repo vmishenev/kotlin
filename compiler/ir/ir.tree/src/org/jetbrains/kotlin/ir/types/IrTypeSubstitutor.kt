@@ -11,12 +11,15 @@ import org.jetbrains.kotlin.ir.types.impl.IrCapturedType
 import org.jetbrains.kotlin.ir.types.impl.buildSimpleType
 import org.jetbrains.kotlin.ir.types.impl.makeTypeProjection
 import org.jetbrains.kotlin.ir.types.impl.toBuilder
+import org.jetbrains.kotlin.ir.util.defaultType
 import org.jetbrains.kotlin.ir.util.render
 import org.jetbrains.kotlin.types.Variance
 import org.jetbrains.kotlin.types.model.TypeSubstitutorMarker
 
 
-abstract class AbstractIrTypeSubstitutor(private val irBuiltIns: IrBuiltIns) : TypeSubstitutorMarker {
+abstract class AbstractIrTypeSubstitutor(
+    private val irBuiltIns: IrBuiltIns, private val context: IrTypeSystemContext?
+) : TypeSubstitutorMarker {
 
 
     private fun IrType.typeParameterConstructor(): IrTypeParameterSymbol? {
@@ -33,7 +36,9 @@ abstract class AbstractIrTypeSubstitutor(private val irBuiltIns: IrBuiltIns) : T
 
         return type.typeParameterConstructor()?.let {
             when (val typeArgument = getSubstitutionArgument(it)) {
-                is IrStarProjection -> irBuiltIns.anyNType // TODO upper bound for T
+                is IrStarProjection ->
+                    context?.let { with(context) { type.erasedUpperBound() } }?.defaultType
+                        ?: irBuiltIns.anyNType // TODO upper bound for T
                 is IrTypeProjection -> typeArgument.type.run { if (type.isMarkedNullable()) makeNullable() else this }
                 else -> error("unknown type argument")
             }
@@ -77,8 +82,9 @@ abstract class AbstractIrTypeSubstitutor(private val irBuiltIns: IrBuiltIns) : T
 class IrTypeSubstitutor(
     typeParameters: List<IrTypeParameterSymbol>,
     typeArguments: List<IrTypeArgument>,
-    irBuiltIns: IrBuiltIns
-) : AbstractIrTypeSubstitutor(irBuiltIns) {
+    irBuiltIns: IrBuiltIns,
+    context: IrTypeSystemContext?
+) : AbstractIrTypeSubstitutor(irBuiltIns, context) {
 
     init {
         assert(typeParameters.size == typeArguments.size) {
@@ -103,8 +109,9 @@ class IrCapturedTypeSubstitutor(
     typeParameters: List<IrTypeParameterSymbol>,
     typeArguments: List<IrTypeArgument>,
     capturedTypes: List<IrCapturedType?>,
-    irBuiltIns: IrBuiltIns
-) : AbstractIrTypeSubstitutor(irBuiltIns) {
+    irBuiltIns: IrBuiltIns,
+    context: IrTypeSystemContext
+) : AbstractIrTypeSubstitutor(irBuiltIns, context) {
 
     init {
         assert(typeArguments.size == typeParameters.size)
