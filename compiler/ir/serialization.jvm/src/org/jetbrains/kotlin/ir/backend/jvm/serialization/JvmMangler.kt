@@ -42,7 +42,7 @@ object JvmIrMangler : IrBasedKotlinManglerImpl() {
 
         override fun addReturnTypeSpecialCase(irFunction: IrFunction): Boolean =
             irFunction.isFromJava() && ((irFunction as? IrSimpleFunction)?.correspondingPropertySymbol == null) &&
-                    (irFunction.fqNameWhenAvailable?.isSubpackageOf(StandardClassIds.BASE_COLLECTIONS_PACKAGE) != true)
+                    (irFunction.fqNameWhenAvailable?.isSubpackageOf(StandardClassIds.BASE_KOTLIN_PACKAGE) != true)
 
         override fun mangleTypePlatformSpecific(type: IrType, tBuilder: StringBuilder) {
             if (type.hasAnnotation(JvmAnnotationNames.ENHANCED_NULLABILITY_ANNOTATION)) {
@@ -69,7 +69,7 @@ class JvmDescriptorMangler(private val mainDetector: MainFunctionDetector?) : De
     ) : DescriptorMangleComputer(builder, mode) {
         override fun addReturnTypeSpecialCase(functionDescriptor: FunctionDescriptor): Boolean =
             functionDescriptor is JavaMethodDescriptor &&
-                    functionDescriptor.containingPackage()?.isSubpackageOf(StandardClassIds.BASE_COLLECTIONS_PACKAGE) != true
+                    functionDescriptor.containingPackage()?.isSubpackageOf(StandardClassIds.BASE_KOTLIN_PACKAGE) != true
 
         override fun copy(newMode: MangleMode): DescriptorMangleComputer = JvmDescriptorManglerComputer(builder, mainDetector, newMode)
 
