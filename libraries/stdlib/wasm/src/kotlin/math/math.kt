@@ -5,7 +5,6 @@
 
 package kotlin.math
 
-
 // region ================ Double Math ========================================
 
 /** Computes the sine of the angle [x] given in radians.
@@ -14,7 +13,7 @@ package kotlin.math
  *   - `sin(NaN|+Inf|-Inf)` is `NaN`
  */
 @SinceKotlin("1.2")
-public actual fun sin(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun sin(x: Double): Double = kotlin.math.fdlibm.sin(x)
 
 /** Computes the cosine of the angle [x] given in radians.
  *
@@ -22,7 +21,7 @@ public actual fun sin(x: Double): Double = TODO("Wasm stdlib: Math")
  *   - `cos(NaN|+Inf|-Inf)` is `NaN`
  */
 @SinceKotlin("1.2")
-public actual fun cos(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun cos(x: Double): Double = kotlin.math.fdlibm.cos(x)
 
 /** Computes the tangent of the angle [x] given in radians.
  *
@@ -30,7 +29,7 @@ public actual fun cos(x: Double): Double = TODO("Wasm stdlib: Math")
  *   - `tan(NaN|+Inf|-Inf)` is `NaN`
  */
 @SinceKotlin("1.2")
-public actual fun tan(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun tan(x: Double): Double = kotlin.math.fdlibm.tan(x)
 
 /**
  * Computes the arc sine of the value [x];
@@ -40,17 +39,17 @@ public actual fun tan(x: Double): Double = TODO("Wasm stdlib: Math")
  *    - `asin(x)` is `NaN`, when `abs(x) > 1` or x is `NaN`
  */
 @SinceKotlin("1.2")
-public actual fun asin(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun asin(x: Double): Double = kotlin.math.fdlibm.__ieee754_asin(x)
 
 /**
  * Computes the arc cosine of the value [x];
  * the returned value is an angle in the range from `0.0` to `PI` radians.
  *
  * Special cases:
- *    - `acos(x)` is `NaN`, when `abs(x) > 1` or x is `NaN`
+ *    - `acos(x)` is `NaN`, when `abs(x) > 1` or x is `NaN`fasin
  */
 @SinceKotlin("1.2")
-public actual fun acos(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun acos(x: Double): Double = kotlin.math.fdlibm.__ieee754_acos(x)
 
 /**
  * Computes the arc tangent of the value [x];
@@ -60,7 +59,7 @@ public actual fun acos(x: Double): Double = TODO("Wasm stdlib: Math")
  *   - `atan(NaN)` is `NaN`
  */
 @SinceKotlin("1.2")
-public actual fun atan(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun atan(x: Double): Double = kotlin.math.fdlibm.atan(x)
 
 /**
  * Returns the angle `theta` of the polar coordinates `(r, theta)` that correspond
@@ -79,7 +78,7 @@ public actual fun atan(x: Double): Double = TODO("Wasm stdlib: Math")
  *   - `atan2(NaN, x)` and `atan2(y, NaN)` is `NaN`
  */
 @SinceKotlin("1.2")
-public actual fun atan2(y: Double, x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun atan2(y: Double, x: Double): Double = kotlin.math.fdlibm.__ieee754_atan2(y, x)
 
 /**
  * Computes the hyperbolic sine of the value [x].
@@ -90,7 +89,7 @@ public actual fun atan2(y: Double, x: Double): Double = TODO("Wasm stdlib: Math"
  *   - `sinh(-Inf)` is `-Inf`
  */
 @SinceKotlin("1.2")
-public actual fun sinh(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun sinh(x: Double): Double = kotlin.math.fdlibm.__ieee754_sinh(x)
 
 /**
  * Computes the hyperbolic cosine of the value [x].
@@ -100,7 +99,7 @@ public actual fun sinh(x: Double): Double = TODO("Wasm stdlib: Math")
  *   - `cosh(+Inf|-Inf)` is `+Inf`
  */
 @SinceKotlin("1.2")
-public actual fun cosh(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun cosh(x: Double): Double = kotlin.math.fdlibm.__ieee754_cosh(x)
 
 /**
  * Computes the hyperbolic tangent of the value [x].
@@ -111,7 +110,7 @@ public actual fun cosh(x: Double): Double = TODO("Wasm stdlib: Math")
  *   - `tanh(-Inf)` is `-1.0`
  */
 @SinceKotlin("1.2")
-public actual fun tanh(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun tanh(x: Double): Double = kotlin.math.fdlibm.tanh(x)
 
 /**
  * Computes the inverse hyperbolic sine of the value [x].
@@ -124,7 +123,7 @@ public actual fun tanh(x: Double): Double = TODO("Wasm stdlib: Math")
  *   - `asinh(-Inf)` is `-Inf`
  */
 @SinceKotlin("1.2")
-public actual fun asinh(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun asinh(x: Double): Double = kotlin.math.fdlibm.asinh(x)
 
 /**
  * Computes the inverse hyperbolic cosine of the value [x].
@@ -137,12 +136,12 @@ public actual fun asinh(x: Double): Double = TODO("Wasm stdlib: Math")
  *   - `acosh(+Inf)` is `+Inf`
  */
 @SinceKotlin("1.2")
-public actual fun acosh(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun acosh(x: Double): Double = kotlin.math.fdlibm.__ieee754_acosh(x)
 
 /**
  * Computes the inverse hyperbolic tangent of the value [x].
  *
- * The returned value is `y` such that `tanh(y) == x`.
+ * The returned value is `y` such that `tanh(y) == x `.
  *
  * Special cases:
  *   - `tanh(NaN)` is `NaN`
@@ -151,7 +150,7 @@ public actual fun acosh(x: Double): Double = TODO("Wasm stdlib: Math")
  *   - `tanh(-1.0)` is `-Inf`
  */
 @SinceKotlin("1.2")
-public actual fun atanh(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun atanh(x: Double): Double = kotlin.math.fdlibm.__ieee754_atanh(x)
 
 /**
  * Computes `sqrt(x^2 + y^2)` without intermediate overflow or underflow.
@@ -161,7 +160,7 @@ public actual fun atanh(x: Double): Double = TODO("Wasm stdlib: Math")
  *   - returns `NaN` if any of arguments is `NaN` and the other is not infinite
  */
 @SinceKotlin("1.2")
-public actual fun hypot(x: Double, y: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun hypot(x: Double, y: Double): Double = kotlin.math.fdlibm.__ieee754_hypot(x, y)
 
 /**
  * Computes the positive square root of the value [x].
@@ -170,7 +169,7 @@ public actual fun hypot(x: Double, y: Double): Double = TODO("Wasm stdlib: Math"
  *   - `sqrt(x)` is `NaN` when `x < 0` or `x` is `NaN`
  */
 @SinceKotlin("1.2")
-public actual fun sqrt(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun sqrt(x: Double): Double = kotlin.wasm.internal.wasm_f64_sqrt(x)
 
 /**
  * Computes Euler's number `e` raised to the power of the value [x].
@@ -181,7 +180,7 @@ public actual fun sqrt(x: Double): Double = TODO("Wasm stdlib: Math")
  *   - `exp(-Inf)` is `0.0`
  */
 @SinceKotlin("1.2")
-public actual fun exp(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun exp(x: Double): Double = kotlin.math.fdlibm.__ieee754_exp(x)
 
 /**
  * Computes `exp(x) - 1`.
@@ -196,10 +195,10 @@ public actual fun exp(x: Double): Double = TODO("Wasm stdlib: Math")
  * @see [exp] function.
  */
 @SinceKotlin("1.2")
-public actual fun expm1(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun expm1(x: Double): Double = kotlin.math.fdlibm.expm1(x)
 
 /**
- * Computes the logarithm of the value [x] to the given [base].
+     * Computes the logarithm of the value [x] to the given [base].
  *
  * Special cases:
  *   - `log(x, b)` is `NaN` if either `x` or `b` are `NaN`
@@ -211,7 +210,18 @@ public actual fun expm1(x: Double): Double = TODO("Wasm stdlib: Math")
  * See also logarithm functions for common fixed bases: [ln], [log10] and [log2].
  */
 @SinceKotlin("1.2")
-public actual fun log(x: Double, base: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun log(x: Double, base: Double): Double {
+    if (x.isNaN() || base.isNaN()) return Double.NaN
+    if (x < 0.0 || base <= 0.0 || base == 1.0) return Double.NaN
+    if (x.isInfinite() && base.isInfinite()) return Double.NaN
+    return when(base) {
+        10.0 -> kotlin.math.fdlibm.__ieee754_log10(x)
+        2.0 -> kotlin.math.fdlibm.__ieee754_log2(x)
+        kotlin.math.E -> kotlin.math.fdlibm.__ieee754_log(x)
+        else -> kotlin.math.fdlibm.__ieee754_log(x) / kotlin.math.fdlibm.__ieee754_log(base)
+    }
+}
+
 
 /**
  * Computes the natural logarithm (base `E`) of the value [x].
@@ -223,7 +233,7 @@ public actual fun log(x: Double, base: Double): Double = TODO("Wasm stdlib: Math
  *   - `ln(0.0)` is `-Inf`
  */
 @SinceKotlin("1.2")
-public actual fun ln(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun ln(x: Double): Double = kotlin.math.fdlibm.__ieee754_log(x)
 
 /**
  * Computes the common logarithm (base 10) of the value [x].
@@ -231,7 +241,7 @@ public actual fun ln(x: Double): Double = TODO("Wasm stdlib: Math")
  * @see [ln] function for special cases.
  */
 @SinceKotlin("1.2")
-public actual fun log10(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun log10(x: Double): Double = kotlin.math.fdlibm.__ieee754_log10(x)
 
 /**
  * Computes the binary logarithm (base 2) of the value [x].
@@ -239,7 +249,7 @@ public actual fun log10(x: Double): Double = TODO("Wasm stdlib: Math")
  * @see [ln] function for special cases.
  */
 @SinceKotlin("1.2")
-public actual fun log2(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun log2(x: Double): Double = kotlin.math.fdlibm.__ieee754_log2(x)
 
 /**
  * Computes `ln(x + 1)`.
@@ -256,7 +266,7 @@ public actual fun log2(x: Double): Double = TODO("Wasm stdlib: Math")
  * @see [expm1] function
  */
 @SinceKotlin("1.2")
-public actual fun ln1p(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun ln1p(x: Double): Double = kotlin.math.fdlibm.log1p(x)
 
 /**
  * Rounds the given value [x] to an integer towards positive infinity.
@@ -267,7 +277,7 @@ public actual fun ln1p(x: Double): Double = TODO("Wasm stdlib: Math")
  *   - `ceil(x)` is `x` where `x` is `NaN` or `+Inf` or `-Inf` or already a mathematical integer.
  */
 @SinceKotlin("1.2")
-public actual fun ceil(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun ceil(x: Double): Double = kotlin.wasm.internal.wasm_f64_ceil(x)
 
 /**
  * Rounds the given value [x] to an integer towards negative infinity.
@@ -278,7 +288,7 @@ public actual fun ceil(x: Double): Double = TODO("Wasm stdlib: Math")
  *   - `floor(x)` is `x` where `x` is `NaN` or `+Inf` or `-Inf` or already a mathematical integer.
  */
 @SinceKotlin("1.2")
-public actual fun floor(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun floor(x: Double): Double = kotlin.wasm.internal.wasm_f64_floor(x)
 
 /**
  * Rounds the given value [x] to an integer towards zero.
@@ -289,7 +299,7 @@ public actual fun floor(x: Double): Double = TODO("Wasm stdlib: Math")
  *   - `truncate(x)` is `x` where `x` is `NaN` or `+Inf` or `-Inf` or already a mathematical integer.
  */
 @SinceKotlin("1.2")
-public actual fun truncate(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun truncate(x: Double): Double = kotlin.wasm.internal.wasm_f64_truncate(x)
 
 /**
  * Rounds the given value [x] towards the closest integer with ties rounded towards even integer.
@@ -298,7 +308,7 @@ public actual fun truncate(x: Double): Double = TODO("Wasm stdlib: Math")
  *   - `round(x)` is `x` where `x` is `NaN` or `+Inf` or `-Inf` or already a mathematical integer.
  */
 @SinceKotlin("1.2")
-public actual fun round(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun round(x: Double): Double = kotlin.math.fdlibm.rint(x)
 
 /**
  * Returns the absolute value of the given value [x].
@@ -309,7 +319,7 @@ public actual fun round(x: Double): Double = TODO("Wasm stdlib: Math")
  * @see absoluteValue extension property for [Double]
  */
 @SinceKotlin("1.2")
-public actual fun abs(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun abs(x: Double): Double = kotlin.wasm.internal.wasm_f64_abs(x)
 
 /**
  * Returns the sign of the given value [x]:
@@ -321,8 +331,12 @@ public actual fun abs(x: Double): Double = TODO("Wasm stdlib: Math")
  *   - `sign(NaN)` is `NaN`
  */
 @SinceKotlin("1.2")
-public actual fun sign(x: Double): Double = TODO("Wasm stdlib: Math")
-
+public actual fun sign(x: Double): Double = when {
+    x.isNaN() -> Double.NaN
+    x > 0.0 -> 1.0
+    x < 0.0 -> -1.0
+    else -> x
+}
 
 /**
  * Returns the smaller of two values.
@@ -330,7 +344,7 @@ public actual fun sign(x: Double): Double = TODO("Wasm stdlib: Math")
  * If either value is `NaN`, then the result is `NaN`.
  */
 @SinceKotlin("1.2")
-public actual fun min(a: Double, b: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun min(a: Double, b: Double): Double = kotlin.wasm.internal.wasm_f64_min(a, b)
 
 /**
  * Returns the greater of two values.
@@ -338,7 +352,7 @@ public actual fun min(a: Double, b: Double): Double = TODO("Wasm stdlib: Math")
  * If either value is `NaN`, then the result is `NaN`.
  */
 @SinceKotlin("1.2")
-public actual fun max(a: Double, b: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun max(a: Double, b: Double): Double = kotlin.wasm.internal.wasm_f64_max(a, b)
 
 // extensions
 
@@ -354,7 +368,7 @@ public actual fun max(a: Double, b: Double): Double = TODO("Wasm stdlib: Math")
  *   - `b.pow(x)` is `NaN` for `b < 0` and `x` is finite and not an integer
  */
 @SinceKotlin("1.2")
-public actual fun Double.pow(x: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun Double.pow(x: Double): Double = kotlin.math.fdlibm.__ieee754_pow(this, x)
 
 /**
  * Raises this value to the integer power [n].
@@ -362,7 +376,7 @@ public actual fun Double.pow(x: Double): Double = TODO("Wasm stdlib: Math")
  * See the other overload of [pow] for details.
  */
 @SinceKotlin("1.2")
-public actual fun Double.pow(n: Int): Double = TODO("Wasm stdlib: Math")
+public actual fun Double.pow(n: Int): Double = kotlin.math.fdlibm.__ieee754_pow(this, n.toDouble())
 
 /**
  * Returns the absolute value of this value.
@@ -373,7 +387,7 @@ public actual fun Double.pow(n: Int): Double = TODO("Wasm stdlib: Math")
  * @see abs function
  */
 @SinceKotlin("1.2")
-public actual val Double.absoluteValue: Double get() = TODO("Wasm stdlib: Math")
+public actual val Double.absoluteValue: Double get() = kotlin.wasm.internal.wasm_f64_abs(this)
 
 /**
  * Returns the sign of this value:
@@ -385,7 +399,7 @@ public actual val Double.absoluteValue: Double get() = TODO("Wasm stdlib: Math")
  *   - `NaN.sign` is `NaN`
  */
 @SinceKotlin("1.2")
-public actual val Double.sign: Double get() = TODO("Wasm stdlib: Math")
+public actual val Double.sign: Double get() = sign(this)
 
 /**
  * Returns this value with the sign bit same as of the [sign] value.
@@ -393,13 +407,13 @@ public actual val Double.sign: Double get() = TODO("Wasm stdlib: Math")
  * If [sign] is `NaN` the sign of the result is undefined.
  */
 @SinceKotlin("1.2")
-public actual fun Double.withSign(sign: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun Double.withSign(sign: Double): Double = kotlin.wasm.internal.wasm_f64_copysign(this, sign)
 
 /**
  * Returns this value with the sign bit same as of the [sign] value.
  */
 @SinceKotlin("1.2")
-public actual fun Double.withSign(sign: Int): Double = TODO("Wasm stdlib: Math")
+public actual fun Double.withSign(sign: Int): Double = kotlin.wasm.internal.wasm_f64_copysign(this, sign.toDouble())
 
 /**
  * Returns the ulp (unit in the last place) of this value.
@@ -412,19 +426,32 @@ public actual fun Double.withSign(sign: Int): Double = TODO("Wasm stdlib: Math")
  *   - `0.0.ulp` is `Double.MIN_VALUE`
  */
 @SinceKotlin("1.2")
-public actual val Double.ulp: Double get() = TODO("Wasm stdlib: Math")
+public actual val Double.ulp: Double get() = when {
+    this < 0 -> (-this).ulp
+    this.isNaN() || this == Double.POSITIVE_INFINITY -> this
+    this == Double.MAX_VALUE -> this - this.nextDown()
+    else -> this.nextUp() - this
+}
 
 /**
  * Returns the [Double] value nearest to this value in direction of positive infinity.
  */
 @SinceKotlin("1.2")
-public actual fun Double.nextUp(): Double = TODO("Wasm stdlib: Math")
+public actual fun Double.nextUp(): Double = when {
+    this.isNaN() || this == Double.POSITIVE_INFINITY -> this
+    this == 0.0 -> Double.MIN_VALUE
+    else -> Double.fromBits(this.toRawBits() + if (this > 0) 1 else -1)
+}
 
 /**
  * Returns the [Double] value nearest to this value in direction of negative infinity.
  */
 @SinceKotlin("1.2")
-public actual fun Double.nextDown(): Double = TODO("Wasm stdlib: Math")
+public actual fun Double.nextDown(): Double = when {
+    this.isNaN() || this == Double.NEGATIVE_INFINITY -> this
+    this == 0.0 -> -Double.MIN_VALUE
+    else -> Double.fromBits(this.toRawBits() + if (this > 0) -1 else 1)
+}
 
 /**
  * Returns the [Double] value nearest to this value in direction from this value towards the value [to].
@@ -435,7 +462,7 @@ public actual fun Double.nextDown(): Double = TODO("Wasm stdlib: Math")
  *
  */
 @SinceKotlin("1.2")
-public actual fun Double.nextTowards(to: Double): Double = TODO("Wasm stdlib: Math")
+public actual fun Double.nextTowards(to: Double): Double = kotlin.math.fdlibm.nextafter(this, to)
 
 /**
  * Rounds this [Double] value to the nearest integer and converts the result to [Int].
@@ -448,7 +475,12 @@ public actual fun Double.nextTowards(to: Double): Double = TODO("Wasm stdlib: Ma
  * @throws IllegalArgumentException when this value is `NaN`
  */
 @SinceKotlin("1.2")
-public actual fun Double.roundToInt(): Int = TODO("Wasm stdlib: Math")
+public actual fun Double.roundToInt(): Int = when {
+    isNaN() -> throw IllegalArgumentException("Cannot round NaN value.")
+    this > Int.MAX_VALUE -> Int.MAX_VALUE
+    this < Int.MIN_VALUE -> Int.MIN_VALUE
+    else -> kotlin.math.fdlibm.rint(this).toInt()
+}
 
 /**
  * Rounds this [Double] value to the nearest integer and converts the result to [Long].
@@ -461,7 +493,12 @@ public actual fun Double.roundToInt(): Int = TODO("Wasm stdlib: Math")
  * @throws IllegalArgumentException when this value is `NaN`
  */
 @SinceKotlin("1.2")
-public actual fun Double.roundToLong(): Long = TODO("Wasm stdlib: Math")
+public actual fun Double.roundToLong(): Long = when {
+    isNaN() -> throw IllegalArgumentException("Cannot round NaN value.")
+    this > Long.MAX_VALUE -> Long.MAX_VALUE
+    this < Long.MIN_VALUE -> Long.MIN_VALUE
+    else -> kotlin.math.fdlibm.rint(this).toLong()
+}
 
 // endregion
 
@@ -475,7 +512,7 @@ public actual fun Double.roundToLong(): Long = TODO("Wasm stdlib: Math")
  *   - `sin(NaN|+Inf|-Inf)` is `NaN`
  */
 @SinceKotlin("1.2")
-public actual fun sin(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun sin(x: Float): Float = kotlin.math.fdlibm.sin(x.toDouble()).toFloat()
 
 /** Computes the cosine of the angle [x] given in radians.
  *
@@ -483,7 +520,7 @@ public actual fun sin(x: Float): Float = TODO("Wasm stdlib: Math")
  *   - `cos(NaN|+Inf|-Inf)` is `NaN`
  */
 @SinceKotlin("1.2")
-public actual fun cos(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun cos(x: Float): Float = kotlin.math.fdlibm.cos(x.toDouble()).toFloat()
 
 /** Computes the tangent of the angle [x] given in radians.
  *
@@ -491,7 +528,7 @@ public actual fun cos(x: Float): Float = TODO("Wasm stdlib: Math")
  *   - `tan(NaN|+Inf|-Inf)` is `NaN`
  */
 @SinceKotlin("1.2")
-public actual fun tan(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun tan(x: Float): Float = kotlin.math.fdlibm.tan(x.toDouble()).toFloat()
 
 /**
  * Computes the arc sine of the value [x];
@@ -501,7 +538,7 @@ public actual fun tan(x: Float): Float = TODO("Wasm stdlib: Math")
  *    - `asin(x)` is `NaN`, when `abs(x) > 1` or x is `NaN`
  */
 @SinceKotlin("1.2")
-public actual fun asin(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun asin(x: Float): Float = kotlin.math.fdlibm.__ieee754_asin(x.toDouble()).toFloat()
 
 /**
  * Computes the arc cosine of the value [x];
@@ -511,7 +548,7 @@ public actual fun asin(x: Float): Float = TODO("Wasm stdlib: Math")
  *    - `acos(x)` is `NaN`, when `abs(x) > 1` or x is `NaN`
  */
 @SinceKotlin("1.2")
-public actual fun acos(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun acos(x: Float): Float = kotlin.math.fdlibm.__ieee754_acos(x.toDouble()).toFloat()
 
 /**
  * Computes the arc tangent of the value [x];
@@ -521,7 +558,7 @@ public actual fun acos(x: Float): Float = TODO("Wasm stdlib: Math")
  *   - `atan(NaN)` is `NaN`
  */
 @SinceKotlin("1.2")
-public actual fun atan(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun atan(x: Float): Float = kotlin.math.fdlibm.atan(x.toDouble()).toFloat()
 
 /**
  * Returns the angle `theta` of the polar coordinates `(r, theta)` that correspond
@@ -540,7 +577,7 @@ public actual fun atan(x: Float): Float = TODO("Wasm stdlib: Math")
  *   - `atan2(NaN, x)` and `atan2(y, NaN)` is `NaN`
  */
 @SinceKotlin("1.2")
-public actual fun atan2(y: Float, x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun atan2(y: Float, x: Float): Float = kotlin.math.fdlibm.__ieee754_atan2(y.toDouble(), x.toDouble()).toFloat()
 
 /**
  * Computes the hyperbolic sine of the value [x].
@@ -551,7 +588,7 @@ public actual fun atan2(y: Float, x: Float): Float = TODO("Wasm stdlib: Math")
  *   - `sinh(-Inf)` is `-Inf`
  */
 @SinceKotlin("1.2")
-public actual fun sinh(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun sinh(x: Float): Float = kotlin.math.fdlibm.__ieee754_sinh(x.toDouble()).toFloat()
 
 /**
  * Computes the hyperbolic cosine of the value [x].
@@ -561,7 +598,7 @@ public actual fun sinh(x: Float): Float = TODO("Wasm stdlib: Math")
  *   - `cosh(+Inf|-Inf)` is `+Inf`
  */
 @SinceKotlin("1.2")
-public actual fun cosh(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun cosh(x: Float): Float = kotlin.math.fdlibm.__ieee754_cosh(x.toDouble()).toFloat()
 
 /**
  * Computes the hyperbolic tangent of the value [x].
@@ -572,7 +609,7 @@ public actual fun cosh(x: Float): Float = TODO("Wasm stdlib: Math")
  *   - `tanh(-Inf)` is `-1.0`
  */
 @SinceKotlin("1.2")
-public actual fun tanh(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun tanh(x: Float): Float = kotlin.math.fdlibm.tanh(x.toDouble()).toFloat()
 
 /**
  * Computes the inverse hyperbolic sine of the value [x].
@@ -585,7 +622,7 @@ public actual fun tanh(x: Float): Float = TODO("Wasm stdlib: Math")
  *   - `asinh(-Inf)` is `-Inf`
  */
 @SinceKotlin("1.2")
-public actual fun asinh(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun asinh(x: Float): Float = kotlin.math.fdlibm.asinh(x.toDouble()).toFloat()
 
 /**
  * Computes the inverse hyperbolic cosine of the value [x].
@@ -598,7 +635,7 @@ public actual fun asinh(x: Float): Float = TODO("Wasm stdlib: Math")
  *   - `acosh(+Inf)` is `+Inf`
  */
 @SinceKotlin("1.2")
-public actual fun acosh(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun acosh(x: Float): Float = kotlin.math.fdlibm.__ieee754_acosh(x.toDouble()).toFloat()
 
 /**
  * Computes the inverse hyperbolic tangent of the value [x].
@@ -612,7 +649,7 @@ public actual fun acosh(x: Float): Float = TODO("Wasm stdlib: Math")
  *   - `tanh(-1.0)` is `-Inf`
  */
 @SinceKotlin("1.2")
-public actual fun atanh(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun atanh(x: Float): Float = kotlin.math.fdlibm.__ieee754_atanh(x.toDouble()).toFloat()
 
 /**
  * Computes `sqrt(x^2 + y^2)` without intermediate overflow or underflow.
@@ -622,7 +659,7 @@ public actual fun atanh(x: Float): Float = TODO("Wasm stdlib: Math")
  *   - returns `NaN` if any of arguments is `NaN` and the other is not infinite
  */
 @SinceKotlin("1.2")
-public actual fun hypot(x: Float, y: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun hypot(x: Float, y: Float): Float = kotlin.math.fdlibm.__ieee754_hypot(x.toDouble(), y.toDouble()).toFloat()
 
 /**
  * Computes the positive square root of the value [x].
@@ -631,7 +668,7 @@ public actual fun hypot(x: Float, y: Float): Float = TODO("Wasm stdlib: Math")
  *   - `sqrt(x)` is `NaN` when `x < 0` or `x` is `NaN`
  */
 @SinceKotlin("1.2")
-public actual fun sqrt(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun sqrt(x: Float): Float = kotlin.wasm.internal.wasm_f32_sqrt(x)
 
 /**
  * Computes Euler's number `e` raised to the power of the value [x].
@@ -642,7 +679,7 @@ public actual fun sqrt(x: Float): Float = TODO("Wasm stdlib: Math")
  *   - `exp(-Inf)` is `0.0`
  */
 @SinceKotlin("1.2")
-public actual fun exp(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun exp(x: Float): Float = kotlin.math.fdlibm.__ieee754_exp(x.toDouble()).toFloat()
 
 /**
  * Computes `exp(x) - 1`.
@@ -657,7 +694,7 @@ public actual fun exp(x: Float): Float = TODO("Wasm stdlib: Math")
  * @see [exp] function.
  */
 @SinceKotlin("1.2")
-public actual fun expm1(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun expm1(x: Float): Float = kotlin.math.fdlibm.expm1(x.toDouble()).toFloat()
 
 /**
  * Computes the logarithm of the value [x] to the given [base].
@@ -672,7 +709,10 @@ public actual fun expm1(x: Float): Float = TODO("Wasm stdlib: Math")
  * See also logarithm functions for common fixed bases: [ln], [log10] and [log2].
  */
 @SinceKotlin("1.2")
-public actual fun log(x: Float, base: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun log(x: Float, base: Float): Float {
+    if (base <= 0.0F || base == 1.0F) return Float.NaN
+    return log(x.toDouble(), base.toDouble()).toFloat()
+}
 
 /**
  * Computes the natural logarithm (base `E`) of the value [x].
@@ -684,7 +724,7 @@ public actual fun log(x: Float, base: Float): Float = TODO("Wasm stdlib: Math")
  *   - `ln(0.0)` is `-Inf`
  */
 @SinceKotlin("1.2")
-public actual fun ln(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun ln(x: Float): Float = kotlin.math.fdlibm.__ieee754_log(x.toDouble()).toFloat()
 
 /**
  * Computes the common logarithm (base 10) of the value [x].
@@ -692,7 +732,7 @@ public actual fun ln(x: Float): Float = TODO("Wasm stdlib: Math")
  * @see [ln] function for special cases.
  */
 @SinceKotlin("1.2")
-public actual fun log10(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun log10(x: Float): Float = kotlin.math.fdlibm.__ieee754_log10(x.toDouble()).toFloat()
 
 /**
  * Computes the binary logarithm (base 2) of the value [x].
@@ -700,7 +740,7 @@ public actual fun log10(x: Float): Float = TODO("Wasm stdlib: Math")
  * @see [ln] function for special cases.
  */
 @SinceKotlin("1.2")
-public actual fun log2(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun log2(x: Float): Float = kotlin.math.fdlibm.__ieee754_log2(x.toDouble()).toFloat()
 
 /**
  * Computes `ln(a + 1)`.
@@ -717,7 +757,7 @@ public actual fun log2(x: Float): Float = TODO("Wasm stdlib: Math")
  * @see [expm1] function
  */
 @SinceKotlin("1.2")
-public actual fun ln1p(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun ln1p(x: Float): Float = kotlin.math.fdlibm.log1p(x.toDouble()).toFloat()
 
 /**
  * Rounds the given value [x] to an integer towards positive infinity.
@@ -728,7 +768,7 @@ public actual fun ln1p(x: Float): Float = TODO("Wasm stdlib: Math")
  *   - `ceil(x)` is `x` where `x` is `NaN` or `+Inf` or `-Inf` or already a mathematical integer.
  */
 @SinceKotlin("1.2")
-public actual fun ceil(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun ceil(x: Float): Float = kotlin.wasm.internal.wasm_f32_ceil(x)
 
 /**
  * Rounds the given value [x] to an integer towards negative infinity.
@@ -739,7 +779,7 @@ public actual fun ceil(x: Float): Float = TODO("Wasm stdlib: Math")
  *   - `floor(x)` is `x` where `x` is `NaN` or `+Inf` or `-Inf` or already a mathematical integer.
  */
 @SinceKotlin("1.2")
-public actual fun floor(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun floor(x: Float): Float = kotlin.wasm.internal.wasm_f32_floor(x)
 
 /**
  * Rounds the given value [x] to an integer towards zero.
@@ -750,7 +790,7 @@ public actual fun floor(x: Float): Float = TODO("Wasm stdlib: Math")
  *   - `truncate(x)` is `x` where `x` is `NaN` or `+Inf` or `-Inf` or already a mathematical integer.
  */
 @SinceKotlin("1.2")
-public actual fun truncate(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun truncate(x: Float): Float = kotlin.wasm.internal.wasm_f32_truncate(x)
 
 /**
  * Rounds the given value [x] towards the closest integer with ties rounded towards even integer.
@@ -759,7 +799,7 @@ public actual fun truncate(x: Float): Float = TODO("Wasm stdlib: Math")
  *   - `round(x)` is `x` where `x` is `NaN` or `+Inf` or `-Inf` or already a mathematical integer.
  */
 @SinceKotlin("1.2")
-public actual fun round(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun round(x: Float): Float = round(x.toDouble()).toFloat()
 
 
 /**
@@ -771,7 +811,7 @@ public actual fun round(x: Float): Float = TODO("Wasm stdlib: Math")
  * @see absoluteValue extension property for [Float]
  */
 @SinceKotlin("1.2")
-public actual fun abs(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun abs(x: Float): Float = kotlin.wasm.internal.wasm_f32_abs(x)
 
 /**
  * Returns the sign of the given value [x]:
@@ -783,9 +823,12 @@ public actual fun abs(x: Float): Float = TODO("Wasm stdlib: Math")
  *   - `sign(NaN)` is `NaN`
  */
 @SinceKotlin("1.2")
-public actual fun sign(x: Float): Float = TODO("Wasm stdlib: Math")
-
-
+public actual fun sign(x: Float): Float = when {
+    x.isNaN() -> Float.NaN
+    x > 0.0f -> 1.0f
+    x < 0.0f -> -1.0f
+    else -> x
+}
 
 /**
  * Returns the smaller of two values.
@@ -793,7 +836,7 @@ public actual fun sign(x: Float): Float = TODO("Wasm stdlib: Math")
  * If either value is `NaN`, then the result is `NaN`.
  */
 @SinceKotlin("1.2")
-public actual fun min(a: Float, b: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun min(a: Float, b: Float): Float = kotlin.wasm.internal.wasm_f32_min(a, b)
 
 /**
  * Returns the greater of two values.
@@ -801,7 +844,7 @@ public actual fun min(a: Float, b: Float): Float = TODO("Wasm stdlib: Math")
  * If either value is `NaN`, then the result is `NaN`.
  */
 @SinceKotlin("1.2")
-public actual fun max(a: Float, b: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun max(a: Float, b: Float): Float = kotlin.wasm.internal.wasm_f32_max(a ,b)
 
 // extensions
 
@@ -818,7 +861,7 @@ public actual fun max(a: Float, b: Float): Float = TODO("Wasm stdlib: Math")
  *   - `b.pow(x)` is `NaN` for `b < 0` and `x` is finite and not an integer
  */
 @SinceKotlin("1.2")
-public actual fun Float.pow(x: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun Float.pow(x: Float): Float = kotlin.math.fdlibm.__ieee754_pow(this.toDouble(), x.toDouble()).toFloat()
 
 /**
  * Raises this value to the integer power [n].
@@ -826,7 +869,7 @@ public actual fun Float.pow(x: Float): Float = TODO("Wasm stdlib: Math")
  * See the other overload of [pow] for details.
  */
 @SinceKotlin("1.2")
-public actual fun Float.pow(n: Int): Float = TODO("Wasm stdlib: Math")
+public actual fun Float.pow(n: Int): Float = kotlin.math.fdlibm.__ieee754_pow(this.toDouble(), n.toDouble()).toFloat()
 
 /**
  * Returns the absolute value of this value.
@@ -837,7 +880,7 @@ public actual fun Float.pow(n: Int): Float = TODO("Wasm stdlib: Math")
  * @see abs function
  */
 @SinceKotlin("1.2")
-public actual val Float.absoluteValue: Float get() = TODO("Wasm stdlib: Math")
+public actual val Float.absoluteValue: Float get() = kotlin.wasm.internal.wasm_f32_abs(this)
 
 /**
  * Returns the sign of this value:
@@ -849,7 +892,7 @@ public actual val Float.absoluteValue: Float get() = TODO("Wasm stdlib: Math")
  *   - `NaN.sign` is `NaN`
  */
 @SinceKotlin("1.2")
-public actual val Float.sign: Float get() = TODO("Wasm stdlib: Math")
+public actual val Float.sign: Float get() = sign(this)
 
 /**
  * Returns this value with the sign bit same as of the [sign] value.
@@ -857,13 +900,13 @@ public actual val Float.sign: Float get() = TODO("Wasm stdlib: Math")
  * If [sign] is `NaN` the sign of the result is undefined.
  */
 @SinceKotlin("1.2")
-public actual fun Float.withSign(sign: Float): Float = TODO("Wasm stdlib: Math")
+public actual fun Float.withSign(sign: Float): Float = kotlin.wasm.internal.wasm_f32_copysign(this, sign)
 
 /**
  * Returns this value with the sign bit same as of the [sign] value.
  */
 @SinceKotlin("1.2")
-public actual fun Float.withSign(sign: Int): Float = TODO("Wasm stdlib: Math")
+public actual fun Float.withSign(sign: Int): Float = kotlin.wasm.internal.wasm_f32_copysign(this, sign.toFloat())
 
 
 /**
@@ -877,7 +920,12 @@ public actual fun Float.withSign(sign: Int): Float = TODO("Wasm stdlib: Math")
  * @throws IllegalArgumentException when this value is `NaN`
  */
 @SinceKotlin("1.2")
-public actual fun Float.roundToInt(): Int = TODO("Wasm stdlib: Math")
+public actual fun Float.roundToInt(): Int = when {
+    isNaN() -> throw IllegalArgumentException("Cannot round NaN value.")
+    this > Int.MAX_VALUE -> Int.MAX_VALUE
+    this < Int.MIN_VALUE -> Int.MIN_VALUE
+    else -> floor(this + 0.5f).toInt()
+}
 
 /**
  * Rounds this [Float] value to the nearest integer and converts the result to [Long].
@@ -890,8 +938,12 @@ public actual fun Float.roundToInt(): Int = TODO("Wasm stdlib: Math")
  * @throws IllegalArgumentException when this value is `NaN`
  */
 @SinceKotlin("1.2")
-public actual fun Float.roundToLong(): Long = TODO("Wasm stdlib: Math")
-
+public actual fun Float.roundToLong(): Long = when {
+    isNaN() -> throw IllegalArgumentException("Cannot round NaN value.")
+    this > Long.MAX_VALUE -> Long.MAX_VALUE
+    this < Long.MIN_VALUE -> Long.MIN_VALUE
+    else -> floor(this + 0.5f).toLong()
+}
 
 // endregion
 
@@ -907,7 +959,7 @@ public actual fun Float.roundToLong(): Long = TODO("Wasm stdlib: Math")
  * @see absoluteValue extension property for [Int]
  */
 @SinceKotlin("1.2")
-public actual fun abs(n: Int): Int = if (n < 0) -n else n
+public actual fun abs(n: Int): Int = if (n < 0) (-n or 0) else n
 
 /**
  * Returns the smaller of two values.
@@ -919,7 +971,7 @@ public actual fun min(a: Int, b: Int): Int = if (a < b) a else b
  * Returns the greater of two values.
  */
 @SinceKotlin("1.2")
-public actual fun max(a: Int, b: Int): Int = TODO("Wasm stdlib: Math")
+public actual fun max(a: Int, b: Int): Int = if (a > b) a else b
 
 /**
  * Returns the absolute value of this value.
@@ -930,7 +982,7 @@ public actual fun max(a: Int, b: Int): Int = TODO("Wasm stdlib: Math")
  * @see abs function
  */
 @SinceKotlin("1.2")
-public actual val Int.absoluteValue: Int get() = TODO("Wasm stdlib: Math")
+public actual val Int.absoluteValue: Int get() = abs(this)
 
 /**
  * Returns the sign of this value:
@@ -939,11 +991,12 @@ public actual val Int.absoluteValue: Int get() = TODO("Wasm stdlib: Math")
  *   - `1` if the value is positive
  */
 @SinceKotlin("1.2")
-public actual val Int.sign: Int get() = when {
-    this < 0 -> -1
-    this > 0 -> 1
-    else -> 0
-}
+public actual val Int.sign: Int
+    get() = when {
+        this < 0 -> -1
+        this > 0 -> 1
+        else -> 0
+    }
 
 /**
  * Returns the absolute value of the given value [n].
@@ -954,19 +1007,19 @@ public actual val Int.sign: Int get() = when {
  * @see absoluteValue extension property for [Long]
  */
 @SinceKotlin("1.2")
-public actual fun abs(n: Long): Long = if (n >= 0) n else -n
+public actual fun abs(n: Long): Long = if (n < 0) -n else n
 
 /**
  * Returns the smaller of two values.
  */
 @SinceKotlin("1.2")
-public actual fun min(a: Long, b: Long): Long = TODO("Wasm stdlib: Math")
+public actual fun min(a: Long, b: Long): Long = if (a <= b) a else b
 
 /**
  * Returns the greater of two values.
  */
 @SinceKotlin("1.2")
-public actual fun max(a: Long, b: Long): Long = TODO("Wasm stdlib: Math")
+public actual fun max(a: Long, b: Long): Long = if (a >= b) a else b
 
 /**
  * Returns the absolute value of this value.
@@ -977,7 +1030,7 @@ public actual fun max(a: Long, b: Long): Long = TODO("Wasm stdlib: Math")
  * @see abs function
  */
 @SinceKotlin("1.2")
-public actual val Long.absoluteValue: Long get() = TODO("Wasm stdlib: Math")
+public actual val Long.absoluteValue: Long get() = abs(this)
 
 /**
  * Returns the sign of this value:
@@ -987,8 +1040,8 @@ public actual val Long.absoluteValue: Long get() = TODO("Wasm stdlib: Math")
  */
 @SinceKotlin("1.2")
 public actual val Long.sign: Int get() = when {
-    this < 0 -> -1
-    this > 0 -> 1
+    this < 0L -> -1
+    this > 0L -> 1
     else -> 0
 }
 
