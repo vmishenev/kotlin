@@ -28,7 +28,7 @@ import org.jetbrains.kotlin.incremental.isClassFile
 import org.jetbrains.kotlin.jvm.abi.asm.AbiClassBuilder
 import org.jetbrains.kotlin.jvm.abi.asm.FilterInnerClassesVisitor
 import org.jetbrains.kotlin.jvm.abi.asm.InnerClassesCollectingVisitor
-import org.jetbrains.kotlin.load.kotlin.FileBasedKotlinClass
+import org.jetbrains.kotlin.deserialization.common.jvm.impl.FileBasedKotlinClass
 import org.jetbrains.kotlin.load.kotlin.header.KotlinClassHeader
 import org.jetbrains.kotlin.metadata.ProtoBuf
 import org.jetbrains.kotlin.metadata.deserialization.Flags

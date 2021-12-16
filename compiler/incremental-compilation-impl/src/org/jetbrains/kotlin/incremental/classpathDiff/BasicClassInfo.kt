@@ -5,7 +5,7 @@
 
 package org.jetbrains.kotlin.incremental.classpathDiff
 
-import org.jetbrains.kotlin.load.kotlin.FileBasedKotlinClass.*
+import org.jetbrains.kotlin.deserialization.common.jvm.impl.FileBasedKotlinClass.*
 import org.jetbrains.kotlin.load.kotlin.header.KotlinClassHeader
 import org.jetbrains.kotlin.load.kotlin.header.ReadKotlinClassHeaderAnnotationVisitor
 import org.jetbrains.kotlin.name.ClassId
