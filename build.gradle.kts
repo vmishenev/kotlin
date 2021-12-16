@@ -751,6 +751,7 @@ tasks {
         dependsOn("examplesTest")
 
         dependsOn("nativeCompilerTest")
+        dependsOn("psiStubTests")
 
         dependsOn(":kotlin-daemon-tests:test")
         dependsOn("scriptingTest")
@@ -768,6 +769,10 @@ tasks {
         dependsOn(":kotlin-util-klib:test")
 
         dependsOn(":generators:test")
+    }
+
+    register("psiStubTests") {
+        dependsOn( ":compiler:psi:cls-psi-file-stub-builder:test")
     }
 
     register("toolsTest") {
