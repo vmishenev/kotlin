@@ -15,19 +15,21 @@ import org.jetbrains.kotlin.backend.common.serialization.mangle.descriptor.Descr
 import org.jetbrains.kotlin.backend.common.serialization.mangle.ir.IrBasedKotlinManglerImpl
 import org.jetbrains.kotlin.backend.common.serialization.mangle.ir.IrExportCheckerVisitor
 import org.jetbrains.kotlin.backend.common.serialization.mangle.ir.IrMangleComputer
-import org.jetbrains.kotlin.descriptors.*
+import org.jetbrains.kotlin.descriptors.DeclarationDescriptor
+import org.jetbrains.kotlin.descriptors.FunctionDescriptor
+import org.jetbrains.kotlin.descriptors.ModuleDescriptor
+import org.jetbrains.kotlin.descriptors.PropertyDescriptor
 import org.jetbrains.kotlin.idea.MainFunctionDetector
-import org.jetbrains.kotlin.ir.declarations.*
+import org.jetbrains.kotlin.ir.declarations.IrDeclaration
+import org.jetbrains.kotlin.ir.declarations.IrFunction
+import org.jetbrains.kotlin.ir.declarations.IrSimpleFunction
 import org.jetbrains.kotlin.ir.types.IrType
-import org.jetbrains.kotlin.ir.util.fqNameWhenAvailable
 import org.jetbrains.kotlin.ir.util.hasAnnotation
 import org.jetbrains.kotlin.ir.util.isFromJava
 import org.jetbrains.kotlin.load.java.JvmAnnotationNames
 import org.jetbrains.kotlin.load.java.descriptors.JavaMethodDescriptor
 import org.jetbrains.kotlin.load.java.lazy.descriptors.isJavaField
 import org.jetbrains.kotlin.load.java.typeEnhancement.hasEnhancedNullability
-import org.jetbrains.kotlin.name.StandardClassIds
-import org.jetbrains.kotlin.name.isSubpackageOf
 import org.jetbrains.kotlin.types.UnwrappedType
 import org.jetbrains.kotlin.types.checker.SimpleClassicTypeSystemContext
 
@@ -41,8 +43,7 @@ object JvmIrMangler : IrBasedKotlinManglerImpl() {
             JvmIrManglerComputer(builder, newMode, compatibleMode)
 
         override fun addReturnTypeSpecialCase(irFunction: IrFunction): Boolean =
-            irFunction.isFromJava() && ((irFunction as? IrSimpleFunction)?.correspondingPropertySymbol == null) &&
-                    (irFunction.fqNameWhenAvailable?.isSubpackageOf(StandardClassIds.BASE_KOTLIN_PACKAGE) != true)
+            irFunction.isFromJava() && (irFunction as? IrSimpleFunction)?.correspondingPropertySymbol == null
 
         override fun mangleTypePlatformSpecific(type: IrType, tBuilder: StringBuilder) {
             if (type.hasAnnotation(JvmAnnotationNames.ENHANCED_NULLABILITY_ANNOTATION)) {
@@ -68,8 +69,7 @@ class JvmDescriptorMangler(private val mainDetector: MainFunctionDetector?) : De
         mode: MangleMode
     ) : DescriptorMangleComputer(builder, mode) {
         override fun addReturnTypeSpecialCase(functionDescriptor: FunctionDescriptor): Boolean =
-            functionDescriptor is JavaMethodDescriptor &&
-                    functionDescriptor.containingPackage()?.isSubpackageOf(StandardClassIds.BASE_KOTLIN_PACKAGE) != true
+            functionDescriptor is JavaMethodDescriptor
 
         override fun copy(newMode: MangleMode): DescriptorMangleComputer = JvmDescriptorManglerComputer(builder, mainDetector, newMode)
 
