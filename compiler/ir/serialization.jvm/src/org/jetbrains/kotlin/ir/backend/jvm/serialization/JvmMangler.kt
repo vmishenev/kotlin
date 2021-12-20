@@ -26,6 +26,7 @@ import org.jetbrains.kotlin.ir.declarations.IrSimpleFunction
 import org.jetbrains.kotlin.ir.types.IrType
 import org.jetbrains.kotlin.ir.util.hasAnnotation
 import org.jetbrains.kotlin.ir.util.isFromJava
+import org.jetbrains.kotlin.ir.util.resolveFakeOverride
 import org.jetbrains.kotlin.load.java.JvmAnnotationNames
 import org.jetbrains.kotlin.load.java.descriptors.JavaMethodDescriptor
 import org.jetbrains.kotlin.load.java.lazy.descriptors.isJavaField
@@ -42,8 +43,10 @@ object JvmIrMangler : IrBasedKotlinManglerImpl() {
         override fun copy(newMode: MangleMode): IrMangleComputer =
             JvmIrManglerComputer(builder, newMode, compatibleMode)
 
-        override fun addReturnTypeSpecialCase(irFunction: IrFunction): Boolean =
-            irFunction.isFromJava() && (irFunction as? IrSimpleFunction)?.correspondingPropertySymbol == null
+        override fun addReturnTypeSpecialCase(irFunction: IrFunction): Boolean {
+            val resolved = (irFunction as? IrSimpleFunction)?.resolveFakeOverride() ?: return false
+            return resolved.isFromJava() && resolved.correspondingPropertySymbol == null
+        }
 
         override fun mangleTypePlatformSpecific(type: IrType, tBuilder: StringBuilder) {
             if (type.hasAnnotation(JvmAnnotationNames.ENHANCED_NULLABILITY_ANNOTATION)) {
