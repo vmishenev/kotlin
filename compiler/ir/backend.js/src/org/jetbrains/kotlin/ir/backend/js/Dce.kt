@@ -44,6 +44,7 @@ fun eliminateDeadDeclarations(
             context,
             removeUnusedAssociatedObjects,
         )
+        processUselessPolyfills(modules, usefulDeclarations, context)
     }
 }
 
@@ -58,9 +59,6 @@ private fun IrDeclaration.addRootsTo(to: MutableCollection<IrDeclaration>, conte
             getter?.addRootsTo(to, context)
             setter?.addRootsTo(to, context)
         }
-        isEffectivelyExternal() -> {
-            to += this
-        }
         isExported(context) -> {
             to += this
         }
@@ -68,6 +66,9 @@ private fun IrDeclaration.addRootsTo(to: MutableCollection<IrDeclaration>, conte
             // TODO: simplify
             if ((initializer != null && !isKotlinPackage() || correspondingPropertySymbol?.owner?.isExported(context) == true) && !isConstant()) {
                 to += this
+            }
+            if (origin == IrDeclarationOrigin.PROPERTY_BACKING_FIELD) {
+                to += correspondingPropertySymbol!!.owner
             }
         }
         this is IrSimpleFunction -> {
@@ -103,6 +104,16 @@ private fun buildRoots(modules: Iterable<IrModuleFragment>, context: JsIrBackend
     }
 
     return rootDeclarations
+}
+
+private fun processUselessPolyfills(
+    modules: Iterable<IrModuleFragment>,
+    usefulDeclarations: Set<IrDeclaration>,
+    context: JsIrBackendContext
+) {
+    modules.forEach {
+        context.polyfills.saveOnlyIntersectionOfNextDeclarationsFor(it, usefulDeclarations)
+    }
 }
 
 

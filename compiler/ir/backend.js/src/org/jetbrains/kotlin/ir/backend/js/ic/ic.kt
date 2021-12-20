@@ -9,6 +9,7 @@ import com.intellij.openapi.project.Project
 import org.jetbrains.kotlin.backend.common.lower
 import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.ir.backend.js.*
+import org.jetbrains.kotlin.ir.backend.js.lower.collectNativeImplementations
 import org.jetbrains.kotlin.ir.backend.js.lower.generateJsTests
 import org.jetbrains.kotlin.ir.backend.js.lower.moveBodilessDeclarationsToSeparatePlace
 import org.jetbrains.kotlin.ir.backend.js.lower.serialization.ir.JsIrLinker
@@ -58,6 +59,7 @@ fun prepareSingleLibraryIcCache(
 
     val moduleFragment = allModules.last()
 
+    collectNativeImplementations(context, moduleFragment)
     moveBodilessDeclarationsToSeparatePlace(context, moduleFragment)
 
 //    generateTests(context, moduleFragment)
@@ -151,6 +153,7 @@ fun icCompile(
     if (!modulesToLower.isEmpty()) {
         // This won't work incrementally
         modulesToLower.forEach { module ->
+            collectNativeImplementations(context, module)
             moveBodilessDeclarationsToSeparatePlace(context, module)
         }
 
@@ -228,7 +231,10 @@ private fun prepareIr(
     deserializer.postProcess()
     symbolTable.noUnboundLeft("Unbound symbols at the end of linker")
 
-    deserializer.loadIcIr { moveBodilessDeclarationsToSeparatePlace(context, it) }
+    deserializer.loadIcIr {
+        collectNativeImplementations(context, it)
+        moveBodilessDeclarationsToSeparatePlace(context, it)
+    }
 
     return PreparedIr(context, deserializer, allModules, moduleToName, loweredIrLoaded)
 }
