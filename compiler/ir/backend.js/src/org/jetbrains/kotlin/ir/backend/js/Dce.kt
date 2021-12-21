@@ -59,6 +59,11 @@ private fun IrDeclaration.addRootsTo(to: MutableCollection<IrDeclaration>, conte
             getter?.addRootsTo(to, context)
             setter?.addRootsTo(to, context)
         }
+        isEffectivelyExternal() -> {
+            if (!hasJsNativeImplementation()) {
+                to += this
+            }
+        }
         isExported(context) -> {
             to += this
         }
@@ -66,9 +71,6 @@ private fun IrDeclaration.addRootsTo(to: MutableCollection<IrDeclaration>, conte
             // TODO: simplify
             if ((initializer != null && !isKotlinPackage() || correspondingPropertySymbol?.owner?.isExported(context) == true) && !isConstant()) {
                 to += this
-            }
-            if (origin == IrDeclarationOrigin.PROPERTY_BACKING_FIELD) {
-                to += correspondingPropertySymbol!!.owner
             }
         }
         this is IrSimpleFunction -> {
@@ -303,6 +305,14 @@ fun usefulDeclarations(
 
                     override fun visitBody(body: IrBody) {
                         // Skip
+                    }
+
+                    override fun visitField(declaration: IrField) {
+                        val correspondingPropertySymbol = declaration.correspondingPropertySymbol ?: return super.visitField(declaration)
+                        if (declaration.origin == IrDeclarationOrigin.PROPERTY_BACKING_FIELD && correspondingPropertySymbol.owner.hasJsNativeImplementation()) {
+                           declaration.correspondingPropertySymbol!!.owner.enqueue(declaration, "property backing field")
+                        }
+                        super.visitField(declaration)
                     }
 
                     override fun visitDeclaration(declaration: IrDeclarationBase) {
