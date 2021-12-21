@@ -198,7 +198,7 @@ public actual fun exp(x: Double): Double = kotlin.math.fdlibm.__ieee754_exp(x)
 public actual fun expm1(x: Double): Double = kotlin.math.fdlibm.expm1(x)
 
 /**
-     * Computes the logarithm of the value [x] to the given [base].
+ * Computes the logarithm of the value [x] to the given [base].
  *
  * Special cases:
  *   - `log(x, b)` is `NaN` if either `x` or `b` are `NaN`
@@ -214,12 +214,7 @@ public actual fun log(x: Double, base: Double): Double {
     if (x.isNaN() || base.isNaN()) return Double.NaN
     if (x < 0.0 || base <= 0.0 || base == 1.0) return Double.NaN
     if (x.isInfinite() && base.isInfinite()) return Double.NaN
-    return when(base) {
-        10.0 -> kotlin.math.fdlibm.__ieee754_log10(x)
-        2.0 -> kotlin.math.fdlibm.__ieee754_log2(x)
-        kotlin.math.E -> kotlin.math.fdlibm.__ieee754_log(x)
-        else -> kotlin.math.fdlibm.__ieee754_log(x) / kotlin.math.fdlibm.__ieee754_log(base)
-    }
+    return kotlin.math.fdlibm.__ieee754_log(x) / kotlin.math.fdlibm.__ieee754_log(base)
 }
 
 
@@ -959,7 +954,7 @@ public actual fun Float.roundToLong(): Long = when {
  * @see absoluteValue extension property for [Int]
  */
 @SinceKotlin("1.2")
-public actual fun abs(n: Int): Int = if (n < 0) (-n or 0) else n
+public actual fun abs(n: Int): Int = if (n < 0) -n else n
 
 /**
  * Returns the smaller of two values.

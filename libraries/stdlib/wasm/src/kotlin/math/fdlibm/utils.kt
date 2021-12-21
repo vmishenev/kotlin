@@ -6,12 +6,12 @@
 package kotlin.math.fdlibm
 
 //#define __HI(x) *(1+(int*)&x)
-internal fun __HI(x: Double): Int = (x.toBits() ushr 32).toInt()
-internal fun __HIu(x: Double): UInt = (x.toBits() ushr 32).toUInt()
+internal fun __HI(x: Double): Int = (x.toRawBits() ushr 32).toInt()
+internal fun __HIu(x: Double): UInt = (x.toRawBits() ushr 32).toUInt()
 
 //#define __LO(x) *(int*)&x
-internal fun __LO(x: Double): Int = (x.toBits() and 0xFFFFFFFF).toInt()
-internal fun __LOu(x: Double): UInt = (x.toBits() and 0xFFFFFFFF).toUInt()
+internal fun __LO(x: Double): Int = (x.toRawBits() and 0xFFFFFFFF).toInt()
+internal fun __LOu(x: Double): UInt = (x.toRawBits() and 0xFFFFFFFF).toUInt()
 
 internal fun doubleSetWord(d: Double = 0.0, hi: Int = __HI(d), lo: Int = __LO(d)): Double =
     Double.fromBits((hi.toLong() shl 32) or (lo.toLong() and 0xFFFFFFFF))

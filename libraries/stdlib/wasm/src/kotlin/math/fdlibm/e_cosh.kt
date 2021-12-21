@@ -69,7 +69,7 @@ internal fun __ieee754_cosh(x: Double): Double {
 
     /* |x| in [log(maxdouble), overflowthresold] */
     //lx = *( (((*(unsigned*)&one) shr 29)) + (unsigned*)&x);
-    lx = (x.toBits() and 0xFFFFFFFF).toUInt()
+    lx = __LOu(x)
     if (ix < 0x408633CE ||
         (ix == 0x408633ce) && (lx <= 0x8fb9f87d.toUInt())
     ) {
