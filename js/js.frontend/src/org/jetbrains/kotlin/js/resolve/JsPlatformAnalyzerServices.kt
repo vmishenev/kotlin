@@ -25,6 +25,7 @@ import org.jetbrains.kotlin.storage.StorageManager
 object JsPlatformAnalyzerServices : PlatformDependentAnalyzerServices() {
     override fun computePlatformSpecificDefaultImports(storageManager: StorageManager, result: MutableList<ImportPath>) {
         result.add(ImportPath.fromString("kotlin.js.*"))
+        result.add(ImportPath.fromString("kotlin.test.*"))
     }
 
     override val platformConfigurator: PlatformConfigurator = JsPlatformConfigurator
