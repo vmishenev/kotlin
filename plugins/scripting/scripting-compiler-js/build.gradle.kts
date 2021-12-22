@@ -33,3 +33,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>> {
 }
 
 publish()
+
+runtimeJar()
+sourcesJar()
+javadocJar()
