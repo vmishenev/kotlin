@@ -304,7 +304,7 @@ internal class BridgeLowering(val context: JvmBackendContext) : FileLoweringPass
             }
 
             // For generic special bridge methods we need to generate bridges for generic overrides coming from Java or Kotlin interfaces.
-            if (specialBridge.substitutedReturnType != null) {
+            if (specialBridge.isOverriding && specialBridge.substitutedReturnType != null) {
                 for (overriddenSpecialBridge in irFunction.overriddenSpecialBridges()) {
                     if (overriddenSpecialBridge.signature !in blacklist) {
                         irClass.addSpecialBridge(overriddenSpecialBridge, specialBridgeTarget)
@@ -320,7 +320,7 @@ internal class BridgeLowering(val context: JvmBackendContext) : FileLoweringPass
             return
         }
 
-        // For concrete fake overrides, some of the bridges may be inherited from the super-classes. Specifically, bridges for all
+        // For concrete fake overrides, some bridges may be inherited from the super-classes. Specifically, bridges for all
         // declarations that are reachable from all concrete immediate super-functions of the given function. Note that all such bridges are
         // guaranteed to delegate to the same implementation as bridges for the given function, that's why it's safe to inherit them.
         //

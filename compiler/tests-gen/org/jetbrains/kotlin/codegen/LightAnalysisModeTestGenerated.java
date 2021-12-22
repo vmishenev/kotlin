@@ -2280,6 +2280,11 @@ public class LightAnalysisModeTestGenerated extends AbstractLightAnalysisModeTes
                 runTest("compiler/testData/codegen/box/builtinStubMethods/extendJavaCollections/hashSet.kt");
             }
 
+            @TestMetadata("intArrayList.kt")
+            public void testIntArrayList() throws Exception {
+                runTest("compiler/testData/codegen/box/builtinStubMethods/extendJavaCollections/intArrayList.kt");
+            }
+
             @TestMetadata("mapEntry.kt")
             public void testMapEntry() throws Exception {
                 runTest("compiler/testData/codegen/box/builtinStubMethods/extendJavaCollections/mapEntry.kt");

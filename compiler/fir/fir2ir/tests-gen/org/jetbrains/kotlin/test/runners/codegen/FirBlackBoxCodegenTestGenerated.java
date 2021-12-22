@@ -2681,6 +2681,12 @@ public class FirBlackBoxCodegenTestGenerated extends AbstractFirBlackBoxCodegenT
             }
 
             @Test
+            @TestMetadata("intArrayList.kt")
+            public void testIntArrayList() throws Exception {
+                runTest("compiler/testData/codegen/box/builtinStubMethods/extendJavaCollections/intArrayList.kt");
+            }
+
+            @Test
             @TestMetadata("mapEntry.kt")
             public void testMapEntry() throws Exception {
                 runTest("compiler/testData/codegen/box/builtinStubMethods/extendJavaCollections/mapEntry.kt");
