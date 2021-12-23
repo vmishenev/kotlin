@@ -169,6 +169,7 @@ internal val inlinePhase = makeKonanFileOpPhase(
         },
         name = "Inline",
         description = "Functions inlining",
+        prerequisite = setOf(lowerBeforeInlinePhase, arrayConstructorPhase, extractLocalClassesFromInlineBodies)
 )
 
 internal val postInlinePhase = makeKonanFileLoweringPhase(
