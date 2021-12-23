@@ -62,7 +62,7 @@ TEST(ThreadWithContextTest, ContextThreadBound) {
         createdThread = std::this_thread::get_id();
     });
     EXPECT_CALL(function, Call()).WillOnce([&] { EXPECT_THAT(std::this_thread::get_id(), createdThread); });
-    auto thread = ::make_unique<ThreadWithContext<PinnedContext>>(function.AsStdFunction());
+    auto thread = ::make_unique<ThreadWithContext<PinnedContext>>([] { return PinnedContext(); }, function.AsStdFunction());
     thread->waitInitialized();
     testing::Mock::VerifyAndClearExpectations(&function);
     testing::Mock::VerifyAndClearExpectations(&mocks.ctorMock);
@@ -88,7 +88,7 @@ TEST(ThreadWithContextTest, WaitInitialized) {
     testing::StrictMock<testing::MockFunction<void()>> function;
     EXPECT_CALL(function, Call()).Times(0);
     ctorMutex.lock();
-    auto thread = ::make_unique<ThreadWithContext<PinnedContext>>(function.AsStdFunction());
+    auto thread = ::make_unique<ThreadWithContext<PinnedContext>>([] { return PinnedContext(); }, function.AsStdFunction());
 
     std::atomic_bool initialized = false;
     std::thread initializedWaiter([&] {
@@ -165,7 +165,7 @@ TEST(SingleThreadExecutorTest, ExecuteFromManyThreads) {
     struct Context {
         KStdVector<int> result;
     };
-    SingleThreadExecutor<ThreadWithContext<Context>> executor;
+    auto executor = MakeSingleThreadExecutorWithContext<Context>();
 
     std::atomic_bool canStart = false;
 

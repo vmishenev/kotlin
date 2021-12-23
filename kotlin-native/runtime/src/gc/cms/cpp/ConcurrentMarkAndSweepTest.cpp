@@ -651,7 +651,7 @@ namespace {
 
 class Mutator : private Pinned {
 public:
-    Mutator() {}
+    Mutator() : executor_(MakeSingleThreadExecutorWithContext<Context>()) {}
 
     template <typename F>
     [[nodiscard]] std::future<void> Execute(F&& f) {

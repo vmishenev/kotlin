@@ -27,11 +27,12 @@ class ThreadWithContext : private Pinned {
 public:
     ThreadWithContext() = default;
 
-    template <typename Function, typename... Args>
-    explicit ThreadWithContext(Function&& f, Args&&... args) :
+    template <typename ContextFactory, typename Function, typename... Args>
+    explicit ThreadWithContext(ContextFactory&& contextFactory, Function&& f, Args&&... args) :
         thread_(
-                [this, f = std::forward<Function>(f)](Args&&... args) mutable {
-                    Context context;
+                [this, contextFactory = std::forward<ContextFactory>(contextFactory), f = std::forward<Function>(f)](
+                        Args&&... args) mutable {
+                    auto context = contextFactory();
                     {
                         std::unique_lock guard(startMutex_);
                         context_ = &context;
@@ -103,7 +104,14 @@ template <typename Thread>
 class SingleThreadExecutor : private Pinned {
 public:
     // Starts the worker thread immediately.
-    SingleThreadExecutor() noexcept : thread_(&SingleThreadExecutor::RunLoop, this) {}
+    template <typename ThreadFactory>
+    explicit SingleThreadExecutor(ThreadFactory&& threadFactory) noexcept :
+        thread_(std::forward<ThreadFactory>(threadFactory)(&SingleThreadExecutor::RunLoop, this)) {}
+
+    SingleThreadExecutor() noexcept :
+        SingleThreadExecutor([](auto&& function, auto&&... args) {
+            return Thread(std::forward<decltype(function)>(function), std::forward<decltype(args)>(args)...);
+        }) {}
 
     ~SingleThreadExecutor() {
         {
@@ -156,5 +164,20 @@ private:
 
     Thread thread_;
 };
+
+template <typename Context, typename ContextFactory>
+SingleThreadExecutor<ThreadWithContext<Context>> MakeSingleThreadExecutorWithContext(ContextFactory&& contextFactory) noexcept {
+    return SingleThreadExecutor<ThreadWithContext<Context>>(
+            [contextFactory = std::forward<ContextFactory>(contextFactory)](auto&& function, auto&&... args) mutable {
+                return ThreadWithContext<Context>(
+                        std::forward<ContextFactory>(contextFactory), std::forward<decltype(function)>(function),
+                        std::forward<decltype(args)>(args)...);
+            });
+}
+
+template <typename Context>
+SingleThreadExecutor<ThreadWithContext<Context>> MakeSingleThreadExecutorWithContext() noexcept {
+    return MakeSingleThreadExecutorWithContext<Context>([] { return Context(); });
+}
 
 } // namespace kotlin
