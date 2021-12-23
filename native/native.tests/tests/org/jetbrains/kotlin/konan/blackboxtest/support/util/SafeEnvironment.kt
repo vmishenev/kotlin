@@ -35,7 +35,7 @@ internal object SafeEnvVars : Iterable<NameAndSafeValue> {
 
     private const val KONAN_WORD = "KONAN"
 
-    private val SAFE_ENV_VARS = setOf("PATH", "USER", "LANG", "PWD", "TEMP", "TMP")
+    private val SAFE_ENV_VARS = setOf("PATH", "USER", "LANG", "PWD", "TEMP", "TMP", "GRADLE_OPTS")
     private val SAFE_ENV_VAR_PREFIXES = listOf("JAVA_", "JDK_")
     private val SAFE_ENV_VAR_SUFFIXES = listOf("DIR", "DIRS", "HOME", "ROOT", "PATH", "FILE")
 }
@@ -73,6 +73,9 @@ internal class SafeProperties : Iterable<NameAndSafeValue> {
             "org.gradle.",
             "org.jetbrains.",
             "os.",
+            "sun.arch.",
+            "sun.cpu.",
+            "sun.os.",
             "psi.",
             "user."
         )
