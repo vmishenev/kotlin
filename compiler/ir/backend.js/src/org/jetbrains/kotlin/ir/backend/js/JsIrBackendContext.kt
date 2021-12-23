@@ -13,7 +13,6 @@ import org.jetbrains.kotlin.descriptors.ClassDescriptor
 import org.jetbrains.kotlin.descriptors.ModuleDescriptor
 import org.jetbrains.kotlin.descriptors.PropertyDescriptor
 import org.jetbrains.kotlin.descriptors.SimpleFunctionDescriptor
-import org.jetbrains.kotlin.descriptors.impl.EmptyPackageFragmentDescriptor
 import org.jetbrains.kotlin.incremental.components.NoLookupLocation
 import org.jetbrains.kotlin.ir.*
 import org.jetbrains.kotlin.ir.backend.js.codegen.JsGenerationGranularity
@@ -24,7 +23,6 @@ import org.jetbrains.kotlin.ir.backend.js.utils.OperatorNames
 import org.jetbrains.kotlin.ir.builders.declarations.addFunction
 import org.jetbrains.kotlin.ir.declarations.*
 import org.jetbrains.kotlin.ir.declarations.impl.IrExternalPackageFragmentImpl
-import org.jetbrains.kotlin.ir.declarations.impl.IrFileImpl
 import org.jetbrains.kotlin.ir.expressions.IrCall
 import org.jetbrains.kotlin.ir.expressions.IrExpression
 import org.jetbrains.kotlin.ir.symbols.IrClassSymbol
@@ -54,7 +52,7 @@ class JsIrBackendContext(
     override val scriptMode: Boolean = false,
     override val es6mode: Boolean = false,
     val dceRuntimeDiagnostic: RuntimeDiagnostic? = null,
-    val propertyLazyInitialization: Boolean = false,
+    propertyLazyInitialization: Boolean = false,
     val baseClassIntoMetadata: Boolean = false,
     val safeExternalBoolean: Boolean = false,
     val safeExternalBooleanDiagnostic: RuntimeDiagnostic? = null,
@@ -63,8 +61,6 @@ class JsIrBackendContext(
     val icCompatibleIr2Js: Boolean = false,
 ) : JsCommonBackendContext {
 
-    val fileToInitializationFuns: MutableMap<IrFile, IrSimpleFunction?> = mutableMapOf()
-    val fileToInitializerPureness: MutableMap<IrFile, Boolean> = mutableMapOf()
     val fieldToInitializer: MutableMap<IrField, IrExpression> = mutableMapOf()
 
     val localClassNames: MutableMap<IrClass, String> = mutableMapOf()
@@ -140,6 +136,10 @@ class JsIrBackendContext(
     val intrinsics: JsIntrinsics = JsIntrinsics(irBuiltIns, this)
     override val reflectionSymbols: ReflectionSymbols get() = intrinsics.reflectionSymbols
 
+    override val propertyLazyInitialization: PropertyLazyInitialization = PropertyLazyInitialization(
+        propertyLazyInitialization, symbolTable.referenceClass(getJsInternalClass("EagerInitialization"))
+    )
+
     override val catchAllThrowableType: IrType
         get() = dynamicType
 
@@ -205,7 +205,8 @@ class JsIrBackendContext(
 
             override val getContinuation = symbolTable.referenceSimpleFunction(getJsInternalFunction("getContinuation"))
 
-            override val coroutineContextGetter = symbolTable.referenceSimpleFunction(context.coroutineSymbols.coroutineContextProperty.getter!!)
+            override val coroutineContextGetter =
+                symbolTable.referenceSimpleFunction(context.coroutineSymbols.coroutineContextProperty.getter!!)
 
             override val suspendCoroutineUninterceptedOrReturn =
                 symbolTable.referenceSimpleFunction(getJsInternalFunction(COROUTINE_SUSPEND_OR_RETURN_JS_NAME))

@@ -35,6 +35,7 @@ import org.jetbrains.kotlin.resolve.CompilerEnvironment
 import org.jetbrains.kotlin.test.Directives
 import org.jetbrains.kotlin.test.KotlinTestWithEnvironment
 import org.jetbrains.kotlin.test.TestFiles
+import org.jetbrains.kotlin.test.directives.JsEnvironmentConfigurationDirectives
 import org.jetbrains.kotlin.test.util.KtTestUtil
 import java.io.Closeable
 import java.io.File
@@ -188,6 +189,7 @@ abstract class BasicWasmBoxTest(
             phaseConfig = phaseConfig,
             irFactory = IrFactoryImpl,
             exportedDeclarations = setOf(FqName.fromSegments(listOfNotNull(testPackage, testFunction))),
+            propertyLazyInitialization = true, // JsEnvironmentConfigurationDirectives.PROPERTY_LAZY_INITIALIZATION in module.directives,
             emitNameSection = true,
         )
 
