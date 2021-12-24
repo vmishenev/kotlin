@@ -135,9 +135,14 @@ TEST(SingleThreadExecutorTest, DropExecutorWithTasks) {
     std::mutex taskMutex;
     testing::StrictMock<testing::MockFunction<void()>> task;
 
-    EXPECT_CALL(task, Call()).WillOnce([&] { std::unique_lock guard(taskMutex); });
+    std::atomic_bool taskStarted = false;
+    EXPECT_CALL(task, Call()).WillOnce([&] {
+        taskStarted = true;
+        std::unique_lock guard(taskMutex);
+    });
     taskMutex.lock();
     auto future = executor->Execute(task.AsStdFunction());
+    while (!taskStarted) {}
 
     KStdVector<std::pair<std::future<void>, bool>> newTasks;
     constexpr size_t tasksCount = 100;
