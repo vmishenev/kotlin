@@ -100,6 +100,7 @@ internal class ExtTestCaseGroupProvider : TestCaseGroupProvider, TestDisposable(
             "compiler/testData/codegen/box/callableReference/kt49526a.kt",                                          // KT-50399
             "compiler/testData/codegen/box/callableReference/kt49526b.kt",                                          // KT-50399
             "compiler/testData/codegen/box/nullCheckOptimization/kt49136a.kt",                                      // KT-50289
+            "compiler/testData/codegen/box/casts/castToDefinitelyNotNullType.kt",                                   // KT-49422
 
             // Temporarily disabled because of java.lang.IllegalStateException: public final expect fun lastIndex(start: kotlin.Int, end: kotlin.Int = ...): kotlin.Unit defined in codegen.box.multiplatform.multiModule.defaultArgument.Test[SimpleFunctionDescriptorImpl@364e8b0e]
             //        at org.jetbrains.kotlin.backend.konan.lower.ExpectToActualDefaultValueCopier$copyDefaultArgumentsFromExpectToActual$1.visitValueParameter(ExpectDeclarationsRemoving.kt:238)
