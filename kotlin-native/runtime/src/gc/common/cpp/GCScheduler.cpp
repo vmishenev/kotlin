@@ -62,7 +62,7 @@ public:
     // Called by the mutators or the timer thread.
     bool NeedsGC() const noexcept {
         auto currentTime = currentTime_();
-        return currentTime >= lastGC_.load() + std::chrono::microseconds(config_.regularGcIntervalUs);
+        return currentTime >= lastGC_.load() + config_.regularGcInterval.load();
     }
 
     // Called by the GC thread.
@@ -89,11 +89,11 @@ public:
         heapGrowthController_(config),
         regularIntervalPacer_(config, currentTime),
         scheduleGC_(std::move(scheduleGC)),
-        timer_(std::chrono::microseconds(config_.regularGcIntervalUs), [this]() {
+        timer_(config_.regularGcInterval.load(), [this]() {
             if (regularIntervalPacer_.NeedsGC()) {
                 scheduleGC_();
             }
-            return std::chrono::microseconds(config_.regularGcIntervalUs);
+            return config_.regularGcInterval.load();
         }) {}
 
     void UpdateFromThreadData(gc::GCSchedulerThreadData& threadData) noexcept override {

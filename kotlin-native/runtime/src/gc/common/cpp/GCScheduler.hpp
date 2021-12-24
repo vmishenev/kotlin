@@ -30,7 +30,7 @@ struct GCSchedulerConfig {
     std::atomic<size_t> allocationThresholdBytes = 10 * 1024;
     std::atomic<bool> autoTune = true;
     // The maximum interval between two collections.
-    std::atomic<uint64_t> regularGcIntervalUs = 10 * 1000 * 1000;
+    std::atomic<std::chrono::microseconds> regularGcInterval = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::seconds(10));
     // How many object bytes must be in the heap to trigger collection. Autotunes when autoTune is true.
     std::atomic<size_t> targetHeapBytes = 1024 * 1024;
     // The rate at which targetHeapBytes changes when autoTune = true. Concretely: if after the collection
