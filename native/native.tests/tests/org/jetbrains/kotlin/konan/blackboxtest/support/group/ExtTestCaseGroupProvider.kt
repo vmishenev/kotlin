@@ -96,6 +96,9 @@ internal class ExtTestCaseGroupProvider : TestCaseGroupProvider, TestDisposable(
             "compiler/testData/codegen/box/multiplatform/multiModule/expectActualLink.kt",                          // KT-41901
             "compiler/testData/codegen/box/multiplatform/multiModule/expectActualMemberLink.kt",                    // KT-33091
             "compiler/testData/codegen/box/multiplatform/multiModule/expectActualTypealiasLink.kt",                 // KT-40137
+            "compiler/testData/codegen/box/callableReference/kt49526_sam.kt",                                       // KT-50399
+            "compiler/testData/codegen/box/callableReference/kt49526a.kt",                                          // KT-50399
+            "compiler/testData/codegen/box/callableReference/kt49526b.kt",                                          // KT-50399
 
             // Temporarily disabled because of java.lang.IllegalStateException: public final expect fun lastIndex(start: kotlin.Int, end: kotlin.Int = ...): kotlin.Unit defined in codegen.box.multiplatform.multiModule.defaultArgument.Test[SimpleFunctionDescriptorImpl@364e8b0e]
             //        at org.jetbrains.kotlin.backend.konan.lower.ExpectToActualDefaultValueCopier$copyDefaultArgumentsFromExpectToActual$1.visitValueParameter(ExpectDeclarationsRemoving.kt:238)
