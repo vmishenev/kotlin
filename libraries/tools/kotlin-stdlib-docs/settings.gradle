@@ -1,5 +1,18 @@
+pluginManagement {
+    plugins {
+        id("org.jetbrains.dokka") version("1.6.20-M1-dev-148")
+    }
+
+    repositories {
+        gradlePluginPortal()
+        maven {
+            url 'https://maven.pkg.jetbrains.space/kotlin/p/dokka/dev'
+        }
+    }
+}
+
 rootProject.name = 'kotlin-stdlib-docs'
 
 include 'kotlin_native'
 include 'kotlin_big'
-include 'ant'
+include 'dokka-samples-transformer-plugin'
