@@ -66,7 +66,7 @@ gradle.projectsEvaluated {
     task dokkaStdlib(type: org.jetbrains.dokka.gradle.DokkaTask) {
         outputDirectory.set(new File(outputDir, "/kotlin-stdlib"))
         moduleName.set("kotlin-stdlib")
-        pluginsMapConfiguration.set(["org.jetbrains.dokka.base.DokkaBase": """{ "mergeImplicitExpectActualDeclarations": "true", "templatesDir": "$projectDir/templates" }"""])
+        pluginsMapConfiguration.set(["org.jetbrains.dokka.base.DokkaBase": """{ "mergeImplicitExpectActualDeclarations": "true", "templatesDir": "${projectDir.toString().replace('\\', '/')}/templates" }"""])
         dokkaSourceSets {
             register("kotlin-stdlib-common") {
                 skipDeprecated.set(false)
@@ -98,7 +98,7 @@ gradle.projectsEvaluated {
                 languageVersion.set(kotlinLanguageVersion)
 
                 samples.from(stdlibSamples.toString())
-                displayName.set("JRE")
+                displayName.set("JVM")
                 dependsOn("kotlin-stdlib-common")
                 sourceRoots.from("$kotlin_root/core/builtins/native")
                 sourceRoots.from("$kotlin_root/core/builtins/src")
@@ -220,27 +220,11 @@ gradle.projectsEvaluated {
                 samples.from(stdlibSamples.toString())
                 displayName.set("JS")
                 dependsOn("kotlin-stdlib-common")
-
+                sourceRoots.from("$kotlin_root/core/builtins/native")
+                sourceRoots.from("$kotlin_root/core/builtins/src")
+                
                 sourceRoots.from("$kotlin_stdlib_dir/js/src")
                 sourceRoots.from("$kotlin_stdlib_dir/js-v1/src")
-
-                sourceRoots.from("$kotlin_root/core/builtins/native/kotlin/Comparable.kt")
-                sourceRoots.from("$kotlin_root/core/builtins/native/kotlin/Enum.kt")
-                sourceRoots.from("$kotlin_root/core/builtins/native/kotlin/Iterator.kt")
-                sourceRoots.from("$kotlin_root/core/builtins/native/kotlin/Collections.kt")
-                sourceRoots.from("$kotlin_root/core/builtins/native/kotlin/CharSequence.kt")
-                sourceRoots.from("$kotlin_root/core/builtins/native/kotlin/Annotation.kt")
-
-                sourceRoots.from("$kotlin_root/core/builtins/src/kotlin/annotation/Annotations.kt")
-                sourceRoots.from("$kotlin_root/core/builtins/src/kotlin/Function.kt")
-                sourceRoots.from("$kotlin_root/core/builtins/src/kotlin/Iterators.kt")
-                sourceRoots.from("$kotlin_root/core/builtins/src/kotlin/Range.kt")
-                sourceRoots.from("$kotlin_root/core/builtins/src/kotlin/Progressions.kt")
-                sourceRoots.from("$kotlin_root/core/builtins/src/kotlin/ProgressionIterators.kt")
-                sourceRoots.from("$kotlin_root/core/builtins/src/kotlin/Ranges.kt")
-                sourceRoots.from("$kotlin_root/core/builtins/src/kotlin/internal/InternalAnnotations.kt")
-                sourceRoots.from("$kotlin_root/core/builtins/src/kotlin/internal/progressionUtil.kt")
-                sourceRoots.from("$kotlin_root/core/builtins/src/kotlin/Unit.kt")
 
                 perPackageOption {
                     matchingRegex.set("org.w3c(\$|\\.).*")
@@ -282,6 +266,7 @@ gradle.projectsEvaluated {
                 sourceRoots.from("$kotlin_native_root/Interop/Runtime/src/native/kotlin")
                 sourceRoots.from("$kotlin_native_root/Interop/JsRuntime/src/main/kotlin")
                 sourceRoots.from("$kotlin_native_root/runtime/src/main/kotlin")
+                sourceRoots.from("$kotlin_stdlib_dir/native-wasm/src")
                 perPackageOption {
                     matchingRegex.set("kotlin.native.internal(\$|\\.).*")
                     suppress.set(true)

@@ -1,6 +1,6 @@
 pluginManagement {
     plugins {
-        id("org.jetbrains.dokka") version("1.6.20-M1-dev-148")
+        id("org.jetbrains.dokka") version(dokka_version)
     }
 
     repositories {

@@ -10,7 +10,7 @@ repositories {
     }
 }
 
-final String dokka_version = findProperty("dokka_version") ?: "1.6.20-M1-dev-148"
+final String dokka_version = findProperty("dokka_version")
 
 dependencies {
     implementation "org.jetbrains.dokka:dokka-base:$dokka_version"
