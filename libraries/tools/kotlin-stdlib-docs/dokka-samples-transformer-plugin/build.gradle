@@ -15,6 +15,7 @@ final String dokka_version = findProperty("dokka_version")
 dependencies {
     implementation "org.jetbrains.dokka:dokka-base:$dokka_version"
     compileOnly "org.jetbrains.dokka:dokka-core:$dokka_version"
+    compileOnly "org.jetbrains.dokka:dokka-analysis:$dokka_version"
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
