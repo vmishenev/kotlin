@@ -362,9 +362,9 @@ TaskProvider<DokkaTask> createStdLibVersionedDocTask(String version, Boolean isL
     }
 }
 
-TaskProvider<DokkaTask> createKotlinTestVersionedDocTask(String version, Boolean isLatest) {
+TaskProvider<DokkaTask> createKotlinTestVersionedDocTask(String version, Boolean isLatest, TaskProvider<DokkaTask> stdlibDocTask = tasks.named("stdlib_" + version)) {
     return tasks.register("kotlin.test_" + version, DokkaTask) {
-        dependsOn(prepare)
+        dependsOn(prepare, stdlibDocTask)
 
         def outputDir = "$buildDir/doc"
 
@@ -383,7 +383,7 @@ TaskProvider<DokkaTask> createKotlinTestVersionedDocTask(String version, Boolean
         def kotlinTestJsClasspath = ["$kotlin_libs/kotlin-test-js".toString()]
         def kotlinTestJvmClasspath = ["$kotlin_libs/kotlin-test".toString()]
 
-        def stdlibPackageList = new URL("file:///$outputDir/kotlin-stdlib/package-list".toString())
+        def stdlibPackageList = new URL("file:///${stdlibDocTask.get().outputDirectory.get()}/stdlib/package-list".toString())
         def junit5PackageList = new URL("https://junit.org/junit5/docs/current/api/element-list".toString())
         def kotlinLanguageVersion = version
 
