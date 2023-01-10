@@ -64,10 +64,10 @@ TaskProvider<DokkaTask> createStdLibVersionedDocTask(String version, Boolean isL
         def stdlibIncludeMd = "$kotlin_root/libraries/stdlib/src/Module.md"
         def stdlibSamples = "$kotlin_root/libraries/stdlib/samples/test"
 
-        def stdlibCommonClasspath = ["$kotlin_libs/kotlin-stdlib-common/".toString()]
-        def stdlibJvmClasspath = ["$kotlin_libs/kotlin-stdlib/".toString(), "$kotlin_libs/kotlin-stdlib-jdk7".toString(), "$kotlin_libs/kotlin-stdlib-jdk8/".toString(), "$kotlin_root/core/reflection.jvm/src".toString()]
+        def stdlibCommonClasspath = fileTree("$kotlin_libs/kotlin-stdlib-common/")
+        def stdlibJvmClasspath = fileTree("$kotlin_libs/kotlin-stdlib/") + fileTree("$kotlin_libs/kotlin-stdlib-jdk7") + fileTree("$kotlin_libs/kotlin-stdlib-jdk8/") //, "$kotlin_root/core/reflection.jvm/src".toString()]
         def stdlibNativeClasspath = ["$kotlin_native_libs/klib/common/stdlib".toString()]
-        def stdlibJsClasspath = ["$kotlin_libs/kotlin-stdlib-js/".toString()]
+        def stdlibJsClasspath = fileTree("$kotlin_libs/kotlin-stdlib-js/")
         def suppressedPackages = [
                 "kotlin.internal",
                 "kotlin.jvm.internal",
@@ -254,12 +254,12 @@ TaskProvider<DokkaTask> createKotlinTestVersionedDocTask(String version, Boolean
 
         def kotlinTestIncludeMd = "$kotlin_root/libraries/kotlin.test/Module.md"
 
-        def kotlinTestCommonClasspath = ["$kotlin_libs/kotlin-test-common".toString()]
-        def kotlinTestJunitClasspath = ["$kotlin_libs/kotlin-test-junit".toString()]
-        def kotlinTestJunit5Classpath = ["$kotlin_libs/kotlin-test-junit5".toString()]
-        def kotlinTestTestngClasspath = ["$kotlin_libs/kotlin-test-testng".toString()]
-        def kotlinTestJsClasspath = ["$kotlin_libs/kotlin-test-js".toString()]
-        def kotlinTestJvmClasspath = ["$kotlin_libs/kotlin-test".toString()]
+        def kotlinTestCommonClasspath = fileTree("$kotlin_libs/kotlin-test-common")
+        def kotlinTestJunitClasspath = fileTree("$kotlin_libs/kotlin-test-junit")
+        def kotlinTestJunit5Classpath = fileTree("$kotlin_libs/kotlin-test-junit5")
+        def kotlinTestTestngClasspath = fileTree("$kotlin_libs/kotlin-test-testng")
+        def kotlinTestJsClasspath = fileTree("$kotlin_libs/kotlin-test-js")
+        def kotlinTestJvmClasspath = fileTree("$kotlin_libs/kotlin-test")
 
         def stdlibPackageList = new URL("file:///${stdlibDocTask.get().outputDirectory.get()}/stdlib/package-list".toString())
         def junit5PackageList = new URL("https://junit.org/junit5/docs/current/api/element-list".toString())
