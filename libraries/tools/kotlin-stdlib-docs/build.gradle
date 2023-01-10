@@ -148,7 +148,7 @@ TaskProvider<DokkaTask> createStdLibVersionedDocTask(String version, Boolean isL
                 platform.set(Platform.jvm)
                 classpath.setFrom(stdlibJvmClasspath)
 
-                displayName.set("JRE8")
+                displayName.set("JVM8")
                 dependsOn("kotlin-stdlib-java-common")
                 if (version != "1.0" && version != "1.1") {
                     dependsOn("kotlin-stdlib-common")
@@ -161,7 +161,7 @@ TaskProvider<DokkaTask> createStdLibVersionedDocTask(String version, Boolean isL
                 classpath.setFrom(stdlibJvmClasspath)
 
 
-                displayName.set("JRE7")
+                displayName.set("JVM7")
                 dependsOn("kotlin-stdlib-java-common")
                 if (version != "1.0" && version != "1.1") {
                     dependsOn("kotlin-stdlib-common")
