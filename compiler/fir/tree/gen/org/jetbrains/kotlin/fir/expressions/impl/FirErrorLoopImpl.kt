@@ -16,6 +16,8 @@ import org.jetbrains.kotlin.fir.expressions.FirBlock
 import org.jetbrains.kotlin.fir.expressions.FirErrorLoop
 import org.jetbrains.kotlin.fir.expressions.FirExpression
 import org.jetbrains.kotlin.fir.expressions.impl.FirEmptyExpressionBlock
+import org.jetbrains.kotlin.fir.types.FirTypeRef
+import org.jetbrains.kotlin.fir.types.impl.FirImplicitTypeRefImplWithoutSource
 import org.jetbrains.kotlin.fir.visitors.*
 import org.jetbrains.kotlin.fir.MutableOrEmptyList
 import org.jetbrains.kotlin.fir.builder.toMutableOrEmpty
@@ -31,10 +33,12 @@ internal class FirErrorLoopImpl(
     override var label: FirLabel?,
     override val diagnostic: ConeDiagnostic,
 ) : FirErrorLoop() {
+    override var typeRef: FirTypeRef = FirImplicitTypeRefImplWithoutSource
     override var block: FirBlock = FirEmptyExpressionBlock()
     override var condition: FirExpression = FirErrorExpressionImpl(source, MutableOrEmptyList.empty(), ConeStubDiagnostic(diagnostic), null, null)
 
     override fun <R, D> acceptChildren(visitor: FirVisitor<R, D>, data: D) {
+        typeRef.accept(visitor, data)
         annotations.forEach { it.accept(visitor, data) }
         block.accept(visitor, data)
         condition.accept(visitor, data)
@@ -64,9 +68,14 @@ internal class FirErrorLoopImpl(
     }
 
     override fun <D> transformOtherChildren(transformer: FirTransformer<D>, data: D): FirErrorLoopImpl {
+        typeRef = typeRef.transform(transformer, data)
         transformAnnotations(transformer, data)
         label = label?.transform(transformer, data)
         return this
+    }
+
+    override fun replaceTypeRef(newTypeRef: FirTypeRef) {
+        typeRef = newTypeRef
     }
 
     override fun replaceAnnotations(newAnnotations: List<FirAnnotation>) {

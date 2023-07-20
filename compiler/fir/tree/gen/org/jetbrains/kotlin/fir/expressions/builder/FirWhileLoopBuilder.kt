@@ -17,8 +17,11 @@ import org.jetbrains.kotlin.fir.expressions.FirAnnotation
 import org.jetbrains.kotlin.fir.expressions.FirBlock
 import org.jetbrains.kotlin.fir.expressions.FirExpression
 import org.jetbrains.kotlin.fir.expressions.FirWhileLoop
+import org.jetbrains.kotlin.fir.expressions.builder.FirExpressionBuilder
 import org.jetbrains.kotlin.fir.expressions.builder.FirLoopBuilder
 import org.jetbrains.kotlin.fir.expressions.impl.FirWhileLoopImpl
+import org.jetbrains.kotlin.fir.types.FirTypeRef
+import org.jetbrains.kotlin.fir.types.impl.FirImplicitTypeRefImplWithoutSource
 import org.jetbrains.kotlin.fir.visitors.*
 
 /*
@@ -27,7 +30,7 @@ import org.jetbrains.kotlin.fir.visitors.*
  */
 
 @FirBuilderDsl
-class FirWhileLoopBuilder : FirLoopBuilder, FirAnnotationContainerBuilder {
+class FirWhileLoopBuilder : FirLoopBuilder, FirAnnotationContainerBuilder, FirExpressionBuilder {
     override var source: KtSourceElement? = null
     override val annotations: MutableList<FirAnnotation> = mutableListOf()
     override var label: FirLabel? = null
@@ -44,6 +47,13 @@ class FirWhileLoopBuilder : FirLoopBuilder, FirAnnotationContainerBuilder {
         )
     }
 
+
+    @Deprecated("Modification of 'typeRef' has no impact for FirWhileLoopBuilder", level = DeprecationLevel.HIDDEN)
+    override var typeRef: FirTypeRef
+        get() = throw IllegalStateException()
+        set(_) {
+            throw IllegalStateException()
+        }
 }
 
 @OptIn(ExperimentalContracts::class)

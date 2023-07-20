@@ -644,4 +644,232 @@ digraph endlessLoops_kt {
     212 -> {213} [style=dotted];
     213 -> {214} [style=dotted];
 
+    subgraph cluster_65 {
+        color=red
+        215 [label="Enter function test_8_while_is_unit" style="filled" fillcolor=red];
+        subgraph cluster_66 {
+            color=blue
+            216 [label="Enter block"];
+            217 [label="Postponed enter to lambda"];
+            subgraph cluster_67 {
+                color=blue
+                218 [label="Enter function <anonymous>" style="filled" fillcolor=red];
+                subgraph cluster_68 {
+                    color=blue
+                    219 [label="Enter block"];
+                    subgraph cluster_69 {
+                        color=blue
+                        220 [label="Enter while loop"];
+                        subgraph cluster_70 {
+                            color=blue
+                            221 [label="Enter loop condition"];
+                            222 [label="Const: Boolean(true)"];
+                            223 [label="Exit loop condition"];
+                        }
+                        subgraph cluster_71 {
+                            color=blue
+                            224 [label="Enter loop block"];
+                            subgraph cluster_72 {
+                                color=blue
+                                225 [label="Enter block"];
+                                226 [label="Access variable R|<local>/x|"];
+                                227 [label="Jump: break@@@[Boolean(true)] "];
+                                228 [label="Stub" style="filled" fillcolor=gray];
+                                229 [label="Exit block" style="filled" fillcolor=gray];
+                            }
+                            230 [label="Exit loop block" style="filled" fillcolor=gray];
+                        }
+                        231 [label="Exit while loop"];
+                    }
+                    232 [label="Exit block"];
+                }
+                233 [label="Exit function <anonymous>" style="filled" fillcolor=red];
+            }
+            234 [label="Postponed exit from lambda"];
+            235 [label="Function call: R|kotlin/run<Inapplicable(INAPPLICABLE): kotlin/run>#|<R|kotlin/Int|>(...)" style="filled" fillcolor=yellow];
+            236 [label="Variable declaration: lval y: R|kotlin/Int|"];
+            237 [label="Exit block"];
+        }
+        238 [label="Exit function test_8_while_is_unit" style="filled" fillcolor=red];
+    }
+    215 -> {216};
+    216 -> {217};
+    217 -> {218 235};
+    217 -> {234} [style=dotted];
+    217 -> {218} [style=dashed];
+    218 -> {219};
+    219 -> {220};
+    220 -> {221};
+    221 -> {222};
+    222 -> {223};
+    223 -> {224};
+    223 -> {231} [style=dotted];
+    224 -> {225};
+    225 -> {226};
+    226 -> {227};
+    227 -> {231};
+    227 -> {228} [style=dotted];
+    228 -> {229} [style=dotted];
+    229 -> {230} [style=dotted];
+    230 -> {221} [color=green style=dotted];
+    231 -> {232};
+    232 -> {233};
+    233 -> {234};
+    234 -> {235};
+    235 -> {236};
+    236 -> {237};
+    237 -> {238};
+
+    subgraph cluster_73 {
+        color=red
+        239 [label="Enter function test_9_while_is_nothing" style="filled" fillcolor=red];
+        subgraph cluster_74 {
+            color=blue
+            240 [label="Enter block"];
+            241 [label="Postponed enter to lambda"];
+            subgraph cluster_75 {
+                color=blue
+                242 [label="Enter function <anonymous>" style="filled" fillcolor=red];
+                subgraph cluster_76 {
+                    color=blue
+                    243 [label="Enter block"];
+                    subgraph cluster_77 {
+                        color=blue
+                        244 [label="Enter while loop"];
+                        subgraph cluster_78 {
+                            color=blue
+                            245 [label="Enter loop condition"];
+                            246 [label="Const: Boolean(true)"];
+                            247 [label="Exit loop condition"];
+                        }
+                        subgraph cluster_79 {
+                            color=blue
+                            248 [label="Enter loop block"];
+                            subgraph cluster_80 {
+                                color=blue
+                                249 [label="Enter block"];
+                                250 [label="Access variable R|<local>/x|"];
+                                251 [label="Jump: ^@run R|<local>/x|"];
+                                252 [label="Stub" style="filled" fillcolor=gray];
+                                253 [label="Exit block" style="filled" fillcolor=gray];
+                            }
+                            254 [label="Exit loop block" style="filled" fillcolor=gray];
+                        }
+                        255 [label="Exit while loop" style="filled" fillcolor=gray];
+                    }
+                    256 [label="Exit block" style="filled" fillcolor=gray];
+                }
+                257 [label="Exit function <anonymous>" style="filled" fillcolor=red];
+            }
+            258 [label="Postponed exit from lambda"];
+            259 [label="Function call: R|kotlin/run|<R|kotlin/Int|>(...)" style="filled" fillcolor=yellow];
+            260 [label="Variable declaration: lval y: R|kotlin/Int|"];
+            261 [label="Exit block"];
+        }
+        262 [label="Exit function test_9_while_is_nothing" style="filled" fillcolor=red];
+    }
+    239 -> {240};
+    240 -> {241};
+    241 -> {242 259};
+    241 -> {258} [style=dotted];
+    241 -> {242} [style=dashed];
+    242 -> {243};
+    243 -> {244};
+    244 -> {245};
+    245 -> {246};
+    246 -> {247};
+    247 -> {248};
+    247 -> {255} [style=dotted];
+    248 -> {249};
+    249 -> {250};
+    250 -> {251};
+    251 -> {257};
+    251 -> {252} [style=dotted];
+    252 -> {253} [style=dotted];
+    253 -> {254} [style=dotted];
+    254 -> {245} [color=green style=dotted];
+    255 -> {256} [style=dotted];
+    256 -> {257} [style=dotted];
+    257 -> {258};
+    258 -> {259};
+    259 -> {260};
+    260 -> {261};
+    261 -> {262};
+
+    subgraph cluster_81 {
+        color=red
+        263 [label="Enter function test_10_do_while_is_nothing" style="filled" fillcolor=red];
+        subgraph cluster_82 {
+            color=blue
+            264 [label="Enter block"];
+            265 [label="Postponed enter to lambda"];
+            subgraph cluster_83 {
+                color=blue
+                266 [label="Enter function <anonymous>" style="filled" fillcolor=red];
+                subgraph cluster_84 {
+                    color=blue
+                    267 [label="Enter block"];
+                    subgraph cluster_85 {
+                        color=blue
+                        268 [label="Enter do-while loop"];
+                        subgraph cluster_86 {
+                            color=blue
+                            269 [label="Enter loop block"];
+                            subgraph cluster_87 {
+                                color=blue
+                                270 [label="Enter block"];
+                                271 [label="Access variable R|<local>/x|"];
+                                272 [label="Jump: ^@run R|<local>/x|"];
+                                273 [label="Stub" style="filled" fillcolor=gray];
+                                274 [label="Exit block" style="filled" fillcolor=gray];
+                            }
+                            275 [label="Exit loop block" style="filled" fillcolor=gray];
+                        }
+                        subgraph cluster_88 {
+                            color=blue
+                            276 [label="Enter loop condition" style="filled" fillcolor=gray];
+                            277 [label="Const: Boolean(true)" style="filled" fillcolor=gray];
+                            278 [label="Exit loop condition" style="filled" fillcolor=gray];
+                        }
+                        279 [label="Exit do-while loop" style="filled" fillcolor=gray];
+                    }
+                    280 [label="Exit block" style="filled" fillcolor=gray];
+                }
+                281 [label="Exit function <anonymous>" style="filled" fillcolor=red];
+            }
+            282 [label="Postponed exit from lambda"];
+            283 [label="Function call: R|kotlin/run|<R|kotlin/Int|>(...)" style="filled" fillcolor=yellow];
+            284 [label="Variable declaration: lval y: R|kotlin/Int|"];
+            285 [label="Exit block"];
+        }
+        286 [label="Exit function test_10_do_while_is_nothing" style="filled" fillcolor=red];
+    }
+    263 -> {264};
+    264 -> {265};
+    265 -> {266 283};
+    265 -> {282} [style=dotted];
+    265 -> {266} [style=dashed];
+    266 -> {267};
+    267 -> {268};
+    268 -> {269};
+    269 -> {270};
+    270 -> {271};
+    271 -> {272};
+    272 -> {281};
+    272 -> {273} [style=dotted];
+    273 -> {274} [style=dotted];
+    274 -> {275} [style=dotted];
+    275 -> {276} [style=dotted];
+    276 -> {277} [style=dotted];
+    277 -> {278} [style=dotted];
+    278 -> {269} [color=green style=dotted];
+    278 -> {279} [style=dotted];
+    279 -> {280} [style=dotted];
+    280 -> {281} [style=dotted];
+    281 -> {282};
+    282 -> {283};
+    283 -> {284};
+    284 -> {285};
+    285 -> {286};
+
 }

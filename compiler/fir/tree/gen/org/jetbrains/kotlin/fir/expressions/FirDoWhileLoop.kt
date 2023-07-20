@@ -8,6 +8,7 @@ package org.jetbrains.kotlin.fir.expressions
 import org.jetbrains.kotlin.KtSourceElement
 import org.jetbrains.kotlin.fir.FirElement
 import org.jetbrains.kotlin.fir.FirLabel
+import org.jetbrains.kotlin.fir.types.FirTypeRef
 import org.jetbrains.kotlin.fir.visitors.*
 
 /*
@@ -17,6 +18,7 @@ import org.jetbrains.kotlin.fir.visitors.*
 
 abstract class FirDoWhileLoop : FirLoop() {
     abstract override val source: KtSourceElement?
+    abstract override val typeRef: FirTypeRef
     abstract override val annotations: List<FirAnnotation>
     abstract override val block: FirBlock
     abstract override val condition: FirExpression
@@ -27,6 +29,8 @@ abstract class FirDoWhileLoop : FirLoop() {
     @Suppress("UNCHECKED_CAST")
     override fun <E : FirElement, D> transform(transformer: FirTransformer<D>, data: D): E =
         transformer.transformDoWhileLoop(this, data) as E
+
+    abstract override fun replaceTypeRef(newTypeRef: FirTypeRef)
 
     abstract override fun replaceAnnotations(newAnnotations: List<FirAnnotation>)
 

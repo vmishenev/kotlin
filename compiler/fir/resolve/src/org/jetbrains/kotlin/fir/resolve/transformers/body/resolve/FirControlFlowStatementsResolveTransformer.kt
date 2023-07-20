@@ -33,6 +33,7 @@ class FirControlFlowStatementsResolveTransformer(transformer: FirAbstractBodyRes
             .transformCondition(transformer, withExpectedType(session.builtinTypes.booleanType))
             .also(dataFlowAnalyzer::exitWhileLoopCondition)
             .transformBlock(transformer, context).also(dataFlowAnalyzer::exitWhileLoop)
+            .also { it.replaceTypeRef(if (dataFlowAnalyzer.isReachable()) session.builtinTypes.unitType else session.builtinTypes.nothingType) }
             .transformOtherChildren(transformer, context)
     }
 
@@ -47,6 +48,7 @@ class FirControlFlowStatementsResolveTransformer(transformer: FirAbstractBodyRes
                 .also(dataFlowAnalyzer::enterDoWhileLoopCondition)
                 .transformCondition(transformer, withExpectedType(session.builtinTypes.booleanType))
                 .also(dataFlowAnalyzer::exitDoWhileLoop)
+                .also { it.replaceTypeRef(if (dataFlowAnalyzer.isReachable()) session.builtinTypes.unitType else session.builtinTypes.nothingType) }
                 .transformOtherChildren(transformer, context)
         }
     }

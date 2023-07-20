@@ -95,3 +95,31 @@ FILE: endlessLoops.kt
         while(Boolean(true))
         R|<local>/x|.R|/A.foo|()
     }
+    public final fun test_8_while_is_unit(x: R|kotlin/Any|): R|kotlin/Unit| {
+        lval y: R|kotlin/Int| = R|kotlin/run<Inapplicable(INAPPLICABLE): kotlin/run>#|<R|kotlin/Int|>(<L> = run@fun <anonymous>(): R|kotlin/Int| <inline=Inline, kind=EXACTLY_ONCE>  {
+            ^ while(Boolean(true)) {
+                R|<local>/x|
+                break@@@[Boolean(true)]
+            }
+
+        }
+        )
+    }
+    public final fun test_9_while_is_nothing(x: R|kotlin/Int|): R|kotlin/Unit| {
+        lval y: R|kotlin/Int| = R|kotlin/run|<R|kotlin/Int|>(<L> = run@fun <anonymous>(): R|kotlin/Int| <inline=Inline, kind=EXACTLY_ONCE>  {
+            while(Boolean(true)) {
+                ^@run R|<local>/x|
+            }
+
+        }
+        )
+    }
+    public final fun test_10_do_while_is_nothing(x: R|kotlin/Int|): R|kotlin/Unit| {
+        lval y: R|kotlin/Int| = R|kotlin/run|<R|kotlin/Int|>(<L> = run@fun <anonymous>(): R|kotlin/Int| <inline=Inline, kind=EXACTLY_ONCE>  {
+            do {
+                ^@run R|<local>/x|
+            }
+            while(Boolean(true))
+        }
+        )
+    }

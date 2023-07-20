@@ -78,7 +78,7 @@ object FirTreeBuilder : AbstractFirTreeBuilder() {
     val resolvedImport by element(Declaration, import)
     val errorImport by element(Declaration, import, diagnosticHolder)
 
-    val loop by sealedElement(Expression, statement, targetElement)
+    val loop by sealedElement(Expression, expression, targetElement)
     val errorLoop by element(Expression, loop, diagnosticHolder)
     val doWhileLoop by element(Expression, loop)
     val whileLoop by element(Expression, loop)
