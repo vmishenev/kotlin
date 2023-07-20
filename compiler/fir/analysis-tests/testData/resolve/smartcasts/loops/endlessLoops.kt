@@ -73,3 +73,28 @@ fun test_7(x: Any) {
     } while (true)
     x.foo()
 }
+
+fun test_8_while_is_unit(x: Any) {
+    val y = run<Int> {
+        <!ARGUMENT_TYPE_MISMATCH!>while (true) {
+            x
+            break
+        }<!>
+    }
+}
+
+fun test_9_while_is_nothing(x: Int) {
+    val y = run<Int> {
+        while (true) {
+            return@run x
+        }
+    }
+}
+
+fun test_10_do_while_is_nothing(x: Int) {
+    val y = run<Int> {
+        do {
+            return@run x
+        } while (true)
+    }
+}

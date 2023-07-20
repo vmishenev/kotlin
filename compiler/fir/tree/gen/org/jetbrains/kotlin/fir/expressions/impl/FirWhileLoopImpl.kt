@@ -13,6 +13,8 @@ import org.jetbrains.kotlin.fir.expressions.FirAnnotation
 import org.jetbrains.kotlin.fir.expressions.FirBlock
 import org.jetbrains.kotlin.fir.expressions.FirExpression
 import org.jetbrains.kotlin.fir.expressions.FirWhileLoop
+import org.jetbrains.kotlin.fir.types.FirTypeRef
+import org.jetbrains.kotlin.fir.types.impl.FirImplicitTypeRefImplWithoutSource
 import org.jetbrains.kotlin.fir.visitors.*
 import org.jetbrains.kotlin.fir.MutableOrEmptyList
 import org.jetbrains.kotlin.fir.builder.toMutableOrEmpty
@@ -29,7 +31,10 @@ internal class FirWhileLoopImpl(
     override var condition: FirExpression,
     override var block: FirBlock,
 ) : FirWhileLoop() {
+    override var typeRef: FirTypeRef = FirImplicitTypeRefImplWithoutSource
+
     override fun <R, D> acceptChildren(visitor: FirVisitor<R, D>, data: D) {
+        typeRef.accept(visitor, data)
         annotations.forEach { it.accept(visitor, data) }
         label?.accept(visitor, data)
         condition.accept(visitor, data)
@@ -59,9 +64,14 @@ internal class FirWhileLoopImpl(
     }
 
     override fun <D> transformOtherChildren(transformer: FirTransformer<D>, data: D): FirWhileLoopImpl {
+        typeRef = typeRef.transform(transformer, data)
         transformAnnotations(transformer, data)
         label = label?.transform(transformer, data)
         return this
+    }
+
+    override fun replaceTypeRef(newTypeRef: FirTypeRef) {
+        typeRef = newTypeRef
     }
 
     override fun replaceAnnotations(newAnnotations: List<FirAnnotation>) {

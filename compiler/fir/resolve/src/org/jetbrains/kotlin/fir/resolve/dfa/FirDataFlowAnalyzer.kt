@@ -142,6 +142,10 @@ abstract class FirDataFlowAnalyzer(
         returnExpressionsOfAnonymousFunctionOrNull(function)
             ?: error("anonymous function ${function.render()} not analyzed")
 
+    fun isReachable(): Boolean {
+        return !graphBuilder.lastNode.isDead
+    }
+
     // ----------------------------------- Named function -----------------------------------
 
     fun enterFunction(function: FirFunction) {
