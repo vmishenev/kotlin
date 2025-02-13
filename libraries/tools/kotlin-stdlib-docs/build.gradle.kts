@@ -53,13 +53,75 @@ val prepare by tasks.registering {
 }
 
 dependencies {
-    dokkaPlugin(project(":plugins:dokka-samples-transformer-plugin"))
+    //dokkaPlugin(project(":plugins:dokka-samples-transformer-plugin"))
     dokkaPlugin(project(":plugins:dokka-version-filter-plugin"))
     dokkaPlugin("org.jetbrains.dokka:versioning-plugin:$dokka_version")
 }
 
+tasks.register<Task>("copyFolders") {
+    val kotlin_stdlib_dir = file("$kotlin_root/libraries/stdlib")
+    doLast {
+        copy {
+            from("$kotlin_stdlib_dir/jvm/builtins")
+            into("src/js/builtins")
+        }
+
+        copy {
+            from("$kotlin_stdlib_dir/native-wasm/src")
+            into("src/native-wasm-js")
+        }
+        copy {
+            from("$kotlin_stdlib_dir/native-wasm/src")
+            into("src/native-wasm-wasi")
+        }
+
+
+        copy {
+            from("$kotlin_stdlib_dir/wasm/src")
+            into("src/wasm-wasi/src")
+        }
+        copy {
+            from("$kotlin_stdlib_dir/wasm/builtins")
+            into("src/wasm-wasi/builtins")
+        }
+        copy {
+            from("$kotlin_stdlib_dir/wasm/internal")
+            into("src/wasm-wasi/internal")
+        }
+        copy {
+            from("$kotlin_stdlib_dir/wasm/stubs")
+            into("src/wasm-wasi/stubs")
+        }
+        copy {
+            from("$kotlin_stdlib_dir/wasm/src")
+            into("src/wasm-js/src")
+        }
+        copy {
+            from("$kotlin_stdlib_dir/wasm/builtins")
+            into("src/wasm-js/builtins")
+        }
+        copy {
+            from("$kotlin_stdlib_dir/wasm/internal")
+            into("src/wasm-js/internal")
+        }
+        copy {
+            from("$kotlin_stdlib_dir/wasm/stubs")
+            into("src/wasm-js/stubs")
+        }
+
+
+        copy {
+            from("$kotlin_root/libraries/kotlin.test/wasm/src/main")
+            into("src/libraries/kotlin.test/wasm-wasi/src/main")
+        }
+    }
+}
+
+
+
 fun createStdLibVersionedDocTask(version: String, isLatest: Boolean) =
     tasks.register<DokkaTaskPartial>("kotlin-stdlib_" + version + (if (isLatest) "_latest" else "")) {
+        dependsOn("copyFolders")
         notCompatibleWithConfigurationCache("Dokka is not compatible with Configuration Cache yet.")
         dependsOn(prepare)
 
@@ -150,7 +212,7 @@ fun createStdLibVersionedDocTask(version: String, isLatest: Boolean) =
                     "Iterator.kt",
                     "Nothing.kt",
                     "Number.kt",
-                ).forEach { sourceRoots.from("$kotlin_stdlib_dir/jvm/builtins/$it") }
+                ).forEach { sourceRoots.from("src/js/builtins/$it") }
 
                 perPackageOption("kotlin.browser") {
                     suppress.set(true)
@@ -182,11 +244,11 @@ fun createStdLibVersionedDocTask(version: String, isLatest: Boolean) =
 
                 displayName.set("Wasm-JS")
                 dependsOn("common")
-                sourceRoots.from("$kotlin_stdlib_dir/native-wasm/src")
-                sourceRoots.from("$kotlin_stdlib_dir/wasm/src")
-                sourceRoots.from("$kotlin_stdlib_dir/wasm/builtins")
-                sourceRoots.from("$kotlin_stdlib_dir/wasm/internal")
-                sourceRoots.from("$kotlin_stdlib_dir/wasm/stubs")
+                sourceRoots.from("src/native-wasm-js/src")
+                sourceRoots.from("src/wasm-js/src")
+                sourceRoots.from("src/wasm-js/builtins")
+                sourceRoots.from("src/wasm-js/internal")
+                sourceRoots.from("src/wasm-js/stubs")
                 sourceRoots.from("$kotlin_stdlib_dir/wasm/js/builtins")
                 sourceRoots.from("$kotlin_stdlib_dir/wasm/js/internal")
                 sourceRoots.from("$kotlin_stdlib_dir/wasm/js/src")
@@ -197,7 +259,7 @@ fun createStdLibVersionedDocTask(version: String, isLatest: Boolean) =
 
                 displayName.set("Wasm-WASI")
                 dependsOn("common")
-                sourceRoots.from("$kotlin_stdlib_dir/native-wasm/src")
+                sourceRoots.from("src/native-wasm-wasi")
                 sourceRoots.from("$kotlin_stdlib_dir/wasm/src")
                 sourceRoots.from("$kotlin_stdlib_dir/wasm/builtins")
                 sourceRoots.from("$kotlin_stdlib_dir/wasm/internal")
@@ -211,7 +273,7 @@ fun createStdLibVersionedDocTask(version: String, isLatest: Boolean) =
                 includes.from(stdlibIncludeMd)
                 noStdlibLink.set(true)
                 languageVersion.set(kotlinLanguageVersion)
-                samples.from(stdlibSamples.toString())
+                //samples.from(stdlibSamples.toString())
                 suppressedPackages.forEach { packageName ->
                     perPackageOption(packageName) {
                         suppress.set(true)
@@ -399,7 +461,7 @@ fun createKotlinTestVersionedDocTask(version: String, isLatest: Boolean) =
 
                 displayName.set("Wasm-WASI")
                 dependsOn("common")
-                sourceRoots.from("$kotlin_root/libraries/kotlin.test/wasm/src/main")
+                sourceRoots.from("src/libraries/kotlin.test/wasm-wasi/src/main")
                 sourceRoots.from("$kotlin_root/libraries/kotlin.test/wasm/wasi/src/main")
             }
             configureEach {
